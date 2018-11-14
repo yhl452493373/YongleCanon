@@ -3,11 +3,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport"
-          content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width"/>
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
     <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
     <title>Hello APP</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
 </head>
 
 <body>
@@ -26,23 +25,23 @@
                 h: api.frameHeight
             },
             styles: {
-                bg: '#eee',
+                bg: 'rgba(0,0,0,0.8)',
                 title: {
-                    bg: '#E0E0E0',
+                    bg: '#4a4a4a',
                     h: 25,
                     align: 'left',
-                    color: '#838383',
+                    color: '#fff',
                     size: 15,
                     marginT: 2,
                     marginL: 15
                 },
                 cell: {
-                    bg: '#fff',
+                    bg: 'rgba(0,0,0,0)',
                     h: 68,
                     main: {
                         marginL: 74,
                         marginT: 17,
-                        color: '#636363',
+                        color: '#fff',
                         size: 13,
                     },
                     sub: {
@@ -59,7 +58,7 @@
                         corner: 2
                     },
                     line: {
-                        h: 0.8,
+                        h: 1,
                         marginL: 0,
                         marginR: 0,
                         bg: '#eee',
@@ -69,7 +68,7 @@
             datas: datas,
             fixedOn: api.frameName,
             fixed: true
-        }, function (ret, err) {
+        }, function(ret, err) {
             if (ret) {
                 if (ret.eventType !== 'show') {
                     api.openWin({
@@ -90,29 +89,29 @@
         api.ajax({
             url: 'http://9yin.azurewebsites.net/neigong/',
             dataType: 'text'
-        }, function (ret, err) {
+        }, function(ret, err) {
             if (ret) {
                 let $html = $(ret);
                 let $details = $html.find('ul');
                 let tempDataArray = [];
-                $details.each(function () {
+                $details.each(function() {
                     let that = this;
                     let tempData = {
                         title: $(this).prev().text(),
-                        cells: function () {
+                        cells: function() {
                             let tempCellArray = [];
-                            $(that).find('li > a').each(function () {
+                            $(that).find('li > a').each(function() {
                                 let $a = $(this);
                                 let tempCell = {
                                     icon: 'http://9yin.azurewebsites.net/images/icon' + $a.attr('href').replace(/\/1/, '') + '.png',
                                     main: $a.text().replace(/［[\u4e00-\u9fa5]+］/, ''),
-                                    sub: '曾用名:' + function () {
+                                    sub: '曾用名:' + function() {
                                         let tempMatch = $a.text().match(/［([\u4e00-\u9fa5]+)］/);
                                         if (tempMatch != null)
                                             return tempMatch[1];
                                         return '无';
                                     }(),
-                                    url: 'http://9yin.azurewebsites.net/' + $a.attr('href')
+                                    url: 'http://9yin.azurewebsites.net' + $a.attr('href')
                                 };
                                 tempCellArray.push(tempCell);
                             });
@@ -134,7 +133,7 @@
         })
     }
 
-    apiready = function () {
+    apiready = function() {
         getCategory();
     };
 </script>
