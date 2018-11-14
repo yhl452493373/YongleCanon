@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width"/>
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+</head>
+
+<body>
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    function initView(datas) {
+        var groupList = api.require('groupList');
+        groupList.open({
+            rect: {
+                x: 0,
+                y: 0,
+                w: api.frameWidth,
+                h: api.frameHeight
+            },
+            styles: {
+                bg: '#eee',
+                title: {
+                    bg: '#E0E0E0',
+                    h: 25,
+                    align: 'left',
+                    color: '#838383',
+                    size: 15,
+                    marginT: 2,
+                    marginL: 15
+                },
+                cell: {
+                    bg: '#fff',
+                    h: 68,
+                    main: {
+                        marginL: 74,
+                        marginT: 17,
+                        color: '#636363',
+                        size: 13,
+                    },
+                    sub: {
+                        marginL: 74,
+                        marginT: 8,
+                        color: '#999999',
+                        size: 12,
+                    },
+                    icon: {
+                        marginL: 15,
+                        marginT: 9,
+                        w: 50,
+                        h: 50,
+                        corner: 2
+                    },
+                    line: {
+                        h: 0.8,
+                        marginL: 0,
+                        marginR: 0,
+                        bg: '#eee',
+                    }
+                }
+            },
+            datas: datas,
+            fixedOn: api.frameName,
+            fixed: true
+        }, function (ret, err) {
+            if (ret) {
+                if (ret.eventType !== 'show') {
+                    api.openWin({
+                        name: 'neigongDetail',
+                        url: './neigongDetail.html',
+                        pageParam: {
+                            url: ret.cellData.url,
+                            name: ret.cellData.main
+                        },
+                        bounces: false
+                    });
+                }
+            }
+        });
+    }
+
+    function getCategory() {
+        api.ajax({
+            url: 'http://9yin.azurewebsites.net/neigong/',
+            dataType: 'text'
+        }, function (ret, err) {
+            if (ret) {
+                let $html = $(ret);
+                let $details = $html.find('ul');
+                let tempDataArray = [];
+                $details.each(function () {
+                    let that = this;
+                    let tempData = {
+                        title: $(this).prev().text(),
+                        cells: function () {
+                            let tempCellArray = [];
+                            $(that).find('li > a').each(function () {
+                                let $a = $(this);
+                                let tempCell = {
+                                    icon: 'http://9yin.azurewebsites.net/images/icon' + $a.attr('href').replace(/\/1/, '') + '.png',
+                                    main: $a.text().replace(/［[\u4e00-\u9fa5]+］/, ''),
+                                    sub: '曾用名:' + function () {
+                                        let tempMatch = $a.text().match(/［([\u4e00-\u9fa5]+)］/);
+                                        if (tempMatch != null)
+                                            return tempMatch[1];
+                                        return '无';
+                                    }(),
+                                    url: 'http://9yin.azurewebsites.net/' + $a.attr('href')
+                                };
+                                tempCellArray.push(tempCell);
+                            });
+                            return tempCellArray;
+                        }()
+                    };
+                    tempDataArray.push(tempData);
+                });
+
+                initView(tempDataArray);
+            } else {
+                api.toast({
+                    msg: engine.name + ':数据获取失败',
+                    duration: 2000,
+                    location: 'bottom'
+                });
+            }
+            loading = false;
+        })
+    }
+
+    apiready = function () {
+        getCategory();
+    };
+</script>
+
+</html>

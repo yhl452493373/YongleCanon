@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/iconfont/iconfont.css"/>
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+        }
+
+        .wrap {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-flex-flow: column;
+        }
+
+        header {
+            height: 44px;
+            width: 100%;
+            text-align: center;
+            background-color: #81a9c3;
+            color: #fff;
+            line-height: 44px;
+            font-size: 20px;
+            display: flex;
+        }
+
+        header .header-button {
+            text-align: center;
+            flex-basis: 4rem;
+            height: 44px;
+            line-height: 44px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        header .header-title {
+            flex: 1;
+            color: #fff;
+            border: none;
+            outline: none;
+            padding: 0 1rem;
+            box-sizing: border-box;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .flex {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+        }
+
+        footer {
+            height: 30px;
+            width: 100%;
+            font-size: 12px;
+            background-color: #81a9c3;
+            color: white;
+            line-height: 15px;
+            text-align: center;
+        }
+
+        #title h1 {
+            text-align: center;
+            font-size: 20px;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="header-button" id="closeWindow"><i class="iconfont icon-back"></i>返回</div>
+    <div class="header-title"></div>
+    <div class="header-button"></div>
+</header>
+<section class="flex">
+    <div id="title"></div>
+    <div id="icon"></div>
+    <div id="description"></div>
+</section>
+<div id="hide" hidden></div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    function initView() {
+        let header = $api.dom('header');
+        let headerH = $api.fixStatusBar(header);
+        header.querySelector('.header-title').innerText = api.pageParam.name;
+    }
+
+    function getData() {
+        let url = api.pageParam.url;
+        api.ajax({
+            url: url,
+            dataType: 'text'
+        }, function (ret, err) {
+            if (ret) {
+                let $hide = $('#hide');
+                $hide.html(ret);
+                $('#title').html($hide.find('h1').prop('outerHTML'));
+            }
+        });
+    }
+
+    function initEvent() {
+        $api.addEvt($api.byId('closeWindow'), 'click', function () {
+            api.closeWin();
+        });
+    }
+
+    $(function () {
+        apiready = function () {
+            initView();
+            initEvent();
+            getData();
+        };
+    });
+</script>
+</html>

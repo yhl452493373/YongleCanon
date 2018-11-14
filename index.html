@@ -3,10 +3,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title>Hello APP</title>
-    <link rel="stylesheet" type="text/css" href="./css/api.css" />
+    <link rel="stylesheet" type="text/css" href="./css/api.css"/>
     <style type="text/css">
         html,
         body {
@@ -29,61 +30,206 @@
             font-size: 20px;
         }
 
-        .flex-1 {
+        .flex {
             -webkit-box-flex: 1;
             -webkit-flex: 1;
+            flex: 1;
         }
 
         footer {
             height: 30px;
             width: 100%;
+            font-size: 12px;
             background-color: #81a9c3;
             color: white;
-            line-height: 30px;
+            line-height: 15px;
             text-align: center;
         }
     </style>
 </head>
 
 <body class="wrap">
-    <header>APICloud</header>
-    <section class="flex-1">
+<header>永乐大典</header>
+<section class="flex">
 
-    </section>
-    <footer>Copyright &copy;<span id="year"></span></footer>
+</section>
+<footer>
+    <P>Copyright &copy;<span id="year"></span>Maintained by @新接口运动衫</P>
+    <p>Programed by 清玄</p>
+</footer>
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
-<script type="text/javascript">
-    apiready = function() {
-        //输出Log，Log将显示在APICloud Studio控制台
-        console.log("Hello World! Hello APICloud!");
+<script>
+    function initView() {
+        let header = $api.dom('header');
+        let headerH = $api.fixStatusBar(header);
+        initNavBar(headerH);
+    }
 
-        var header = $api.dom('header'); // 获取 header 标签元素
-        var footer = $api.dom('footer'); // 获取 footer 标签元素
+    function initNavBar(headerH) {
+        const navSelectorHeight = 40;
+        const navSelectorId = 'navSelector';
 
-        // 1.修复开启沉浸式效果带来的顶部Header与手机状态栏重合的问题，最新api.js方法已支持适配iPhoneX；
-        // 2.默认已开启了沉浸式效果 config.xml中 <preference name="statusBarAppearance" value="true"/>
-        // 3.沉浸式效果适配支持iOS7+，Android4.4+以上版本
-        var headerH = $api.fixStatusBar(header);
-        // 最新api.js为了适配iPhoneX增加的方法，修复底部Footer部分与iPhoneX的底部虚拟横条键重叠的问题；
-        var footerH = $api.fixTabBar(footer);
+        let NVNavigationBar = api.require('NVNavigationBar');
 
-        api.openFrame({
-            name: 'main',
-            url: 'html/main.html',
-            bounces: true,
-            rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
-                marginTop: headerH, // main页面距离win顶部的高度
-                marginBottom: footerH, // main页面距离win底部的高度
-                w: 'auto' // main页面的宽度 自适应屏幕宽度
-            }
+        let initNavSelector = function () {
+            const fontSize = 14;
+            const padding = 10;
+            NVNavigationBar.open({
+                rect: {
+                    x: 0,
+                    y: headerH,
+                    w: api.frameWidth,
+                    h: navSelectorHeight
+                },
+                styles: {
+                    bg: '#fff',
+                    bgAlpha: 1,
+                    orientation: 'horizontal',
+                    font: {
+                        size: fontSize,
+                        sizeSelected: fontSize,
+                        color: '#aaa',
+                        colorSelected: '#FF5722',
+                        alpha: 1
+                    },
+                    itemSize: {
+                        w: 40
+                    }
+                },
+                items: [
+                    {
+                        title: '内功',
+                        alpha: 0,
+                    },
+                    {
+                        title: '武学',
+                        alpha: 0
+                    },
+                    {
+                        title: '经脉',
+                        alpha: 0
+                    },
+                    {
+                        title: '杂项',
+                        alpha: 0
+                    },
+                    {
+                        title: '关于',
+                        alpha: 0
+                    }
+                ],
+                selectedIndex: 0,
+                id: navSelectorId
+            }, function (ret, err) {
+                if (ret.eventType === 'click') {
+                    // api.setFrameGroupIndex({
+                    //     name: 'searchResultList',
+                    //     index: ret.index,
+                    //     scroll: true
+                    // });
+                } else {
+
+                }
+            });
+        };
+
+        let initNavContent = function () {
+            api.openFrameGroup({
+                name: 'navContent',
+                background: '#fff',
+                scrollEnabled: true,
+                rect: {
+                    x: 0,
+                    y: headerH + navSelectorHeight + 2,
+                    w: 'auto',
+                    h: 'auto'
+                },
+                index: 0,
+                preload: 0,
+                frames: [
+                    {
+                        name: 'contentFrame_neigong',
+                        url: 'html/neigongList.html',
+                        pageParam: {
+                            tab: 'neigongList'
+                        }
+                    },
+                    {
+                        name: 'contentFrame_skill',
+                        url: 'html/skillList.html',
+                        pageParam: {
+                            tab: 'skillList'
+                        }
+                    },
+                    {
+                        name: 'contentFrame_jingmai',
+                        url: 'html/jingmaiList.html',
+                        pageParam: {
+                            tab: 'jingmaiList'
+                        }
+                    },
+                    {
+                        name: 'contentFrame_zaxiang',
+                        url: 'html/zaxiangList.html',
+                        pageParam: {
+                            tab: 'zaxiangList'
+                        }
+                    },
+                    {
+                        name: 'contentFrame_about',
+                        url: 'html/about.html',
+                        pageParam: {
+                            tab: 'about'
+                        }
+                    }
+                ],
+            }, function (ret, err) {
+                // NVNavigationBar.setSelected({
+                //     id: engineSelectorId,
+                //     index: ret.index,
+                //     select: true
+                // });
+            });
+        };
+
+        initNavSelector();
+        initNavContent();
+    }
+
+    function initEvent() {
+        exitApp();
+    }
+
+    function exitApp() {
+        api.addEventListener({
+            name: 'keyback'
+        }, function (ret, err) {
+            api.toast({
+                msg: '再按一次返回键退出' + api.appName,
+                duration: 2000,
+                location: 'bottom'
+            });
+
+            api.addEventListener({
+                name: 'keyback'
+            }, function (ret, err) {
+                api.closeWidget({
+                    id: 'A6097622387850',     //这里改成自己的应用ID
+                    retData: {name: 'closeWidget'},
+                    silent: true
+                });
+            });
+
+            setTimeout(function () {
+                exitApp();
+            }, 2000)
         });
+    }
 
-        // 获取当前年份时间，并加载显示到页面
-        var year = $api.byId('year');
-        year.innerHTML = new Date().getFullYear();
-    };
-
+    apiready = function () {
+        initView();
+        initEvent();
+    }
 </script>
-
 </html>
