@@ -3,12 +3,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport"
-          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title>title</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
-    <link rel="stylesheet" type="text/css" href="../css/iconfont/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/iconfont/iconfont.css" />
     <style type="text/css">
         html,
         body {
@@ -119,7 +118,7 @@
         }
 
         #detail table th {
-            width: 80px;
+            width: 70px;
             border-right: 1px solid #eee;
             padding: 5px;
             text-align: center;
@@ -176,60 +175,60 @@
 </head>
 
 <body class="wrap">
-<header>
-    <div class="header-button" id="closeWindow"><i class="iconfont icon-back"></i>返回</div>
-    <div class="header-title">
-        <input type="text" id="level" value="功力一层" readonly placeholder="内功层数">
-    </div>
-    <div class="header-button"></div>
-</header>
-<section class="flex">
-    <div id="title"></div>
-    <div id="description"></div>
-    <script id="const"></script>
-    <div id="base"></div>
-    <div id="detail">
-        <table>
+    <header>
+        <div class="header-button" id="closeWindow"><i class="iconfont icon-back"></i>返回</div>
+        <div class="header-title">
+            <input type="text" id="level" value="功力一层" readonly placeholder="内功层数">
+        </div>
+        <div class="header-button"></div>
+    </header>
+    <section class="flex">
+        <div id="title"></div>
+        <div id="description"></div>
+        <script id="const"></script>
+        <div id="base"></div>
+        <div id="detail">
+            <table>
 
-        </table>
-    </div>
-    <div id="props">
-        <form name="props" onchange="calc();calc_damage()">
-            <h3>属性计算</h3>
-            <font class="yel">武器伤害：</font>
-            <input type="number" min="0" step="1" name="minM"> ~ <input type="number" min="0" step="1" name="maxM"><br>
-            <font class="yel">射击伤害：</font>
-            <input type="number" min="0" step="1" name="minS"> ~ <input type="number" min="0" step="1" name="maxS"><br>
-            <font class="red">近身威力：</font>
-            <input type="number" min="0" step="1" name="meP"><br>
-            <font class="blu">内功威力：</font>
-            <input type="number" min="0" step="1" name="maP"><br>
-            <font class="gre">远程威力：</font>
-            <input type="number" min="0" step="1" name="shP"><br>
-            <font class="pur">兵　　录：</font>
-            <input type="number" value="0" min="0" max="454" id="binglu" name="binglu" readonly>
-            <!--<select name="binglu">-->
-            <!--<option value="0">0</option>-->
-            <!--<option value="5">5</option>-->
-            <!--<option value="8">8</option>-->
-            <!--<option value="11">11</option>-->
-            <!--<option value="17">17</option>-->
-            <!--<option value="26">26</option>-->
-            <!--<option value="38">38</option>-->
-            <!--<option value="58">58</option>-->
-            <!--<option value="86">86</option>-->
-            <!--<option value="130">130</option>-->
-            <!--<option value="194">194</option>-->
-            <!--<option value="244">244</option>-->
-            <!--<option value="295">295</option>-->
-            <!--<option value="347">347</option>-->
-            <!--<option value="400">400</option>-->
-            <!--<option value="454">454</option>-->
-            <!--</select>-->
-        </form>
-    </div>
-</section>
-<div id="hide" hidden></div>
+            </table>
+        </div>
+        <div id="props">
+            <form name="props" onchange="calc();calc_damage()">
+                <h3>属性计算</h3>
+                <font class="yel">武器伤害：</font>
+                <input type="number" min="0" step="1" name="minM"> ~ <input type="number" min="0" step="1" name="maxM"><br>
+                <font class="yel">射击伤害：</font>
+                <input type="number" min="0" step="1" name="minS"> ~ <input type="number" min="0" step="1" name="maxS"><br>
+                <font class="red">近身威力：</font>
+                <input type="number" min="0" step="1" name="meP"><br>
+                <font class="blu">内功威力：</font>
+                <input type="number" min="0" step="1" name="maP"><br>
+                <font class="gre">远程威力：</font>
+                <input type="number" min="0" step="1" name="shP"><br>
+                <font class="pur">兵　　录：</font>
+                <input type="number" value="0" min="0" max="454" id="binglu" name="binglu" readonly>
+                <!--<select name="binglu">-->
+                <!--<option value="0">0</option>-->
+                <!--<option value="5">5</option>-->
+                <!--<option value="8">8</option>-->
+                <!--<option value="11">11</option>-->
+                <!--<option value="17">17</option>-->
+                <!--<option value="26">26</option>-->
+                <!--<option value="38">38</option>-->
+                <!--<option value="58">58</option>-->
+                <!--<option value="86">86</option>-->
+                <!--<option value="130">130</option>-->
+                <!--<option value="194">194</option>-->
+                <!--<option value="244">244</option>-->
+                <!--<option value="295">295</option>-->
+                <!--<option value="347">347</option>-->
+                <!--<option value="400">400</option>-->
+                <!--<option value="454">454</option>-->
+                <!--</select>-->
+            </form>
+        </div>
+    </section>
+    <div id="hide" hidden></div>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/jquery-3.3.1.min.js"></script>
@@ -275,7 +274,7 @@
         api.ajax({
             url: url,
             dataType: 'text'
-        }, function (ret, err) {
+        }, function(ret, err) {
             if (ret) {
                 $('#props').hide();
                 let $hide = $('#hide').empty();
@@ -291,7 +290,7 @@
                     actives: [],
                     datas: []
                 });
-                $select.find('option').each(function (index) {
+                $select.find('option').each(function(index) {
                     let $option = $(this);
                     selectData.datas.push({
                         name: '功力' + numberToChinese(parseInt($option.text())) + '层',
@@ -304,7 +303,7 @@
 
                 let $detail = $select.parent().next();
                 let trStringArray = [];
-                $detail.find('tr').each(function () {
+                $detail.find('tr').each(function() {
                     trStringArray.push(assemblyTr($(this)));
                 });
                 $('#detail table').empty().html(trStringArray.join(''));
@@ -364,7 +363,7 @@
             },
             fixedOn: api.frameName,
             actives: selectData.actives
-        }, function (ret, err) {
+        }, function(ret, err) {
             if (ret) {
                 if (ret.eventType === 'ok') {
                     let levelValue = ret.selectedInfo[0].value;
@@ -385,7 +384,7 @@
             '                <td>' +
             '                    <table>' +
             '                        <tr>' +
-            '                            <td>' + ($children.eq(2).text().trim().length === 0 ? '未知' : $children.eq(2).text()) + '</td>' +
+            '                            <td width=70>' + ($children.eq(2).text().trim().length === 0 ? '未知' : $children.eq(2).text()) + '属性' + '</td>' +
             '                            <td>' + $children.eq(3).text() + '招</td>' +
             '                            <td>' + $children.eq(4).text() + '</td>' +
             '                        </tr>' +
@@ -395,14 +394,18 @@
             '                            <td>' + $children.eq(7).html() + '回气</td>' +
             '                        </tr>' +
             '                        <tr>' +
-            '                            <td>' + ($children.eq(8).text().trim().length === 0 ? '无' : $children.eq(8).html()) + '蓝耗</td>' +
+            '                            <td>' +
+            ($children.eq(8).text().trim().length === 0 ?
+                '无' : $children.eq(8).html().indexOf('(怒)') == -1 ?
+                $children.eq(8).html() + '蓝耗' : $children.eq(8).html().replace('(怒)', '') + '怒气') +
+            '                            </td>' +
             '                            <td colspan="2">' + $children.eq(10).text() + '</td>' +
             '                        </tr>' +
             '                    </table>' +
             '                </td>' +
-            '               ' + function () {
+            '               ' + function() {
                 let tempScript = [];
-                $tr.children('script').each(function () {
+                $tr.children('script').each(function() {
                     tempScript.push(this.outerHTML);
                 });
                 return tempScript.join('');
@@ -415,74 +418,57 @@
 
     function showBingluLevelSelect() {
         let UIActionSelector = api.require('UIActionSelector');
-        const datas = [
-            {
-                name: '0',
-                value: 0
-            },
-            {
-                name: '5',
-                value: 5
-            },
-            {
-                name: '8',
-                value: 8
-            },
-            {
-                name: '11',
-                value: 11
-            },
-            {
-                name: '17',
-                value: 17
-            },
-            {
-                name: '26',
-                value: 26
-            },
-            {
-                name: '38',
-                value: 38
-            },
-            {
-                name: '58',
-                value: 58
-            },
-            {
-                name: '86',
-                value: 86
-            },
-            {
-                name: '130',
-                value: 130
-            },
-            {
-                name: '194',
-                value: 194
-            },
-            {
-                name: '244',
-                value: 244
-            },
-            {
-                name: '295',
-                value: 295
-            },
-            {
-                name: '347',
-                value: 347
-            },
-            {
-                name: '400',
-                value: 400
-            },
-            {
-                name: '454',
-                value: 454
-            }
-        ];
+        const datas = [{
+            name: '0',
+            value: 0
+        }, {
+            name: '5',
+            value: 5
+        }, {
+            name: '8',
+            value: 8
+        }, {
+            name: '11',
+            value: 11
+        }, {
+            name: '17',
+            value: 17
+        }, {
+            name: '26',
+            value: 26
+        }, {
+            name: '38',
+            value: 38
+        }, {
+            name: '58',
+            value: 58
+        }, {
+            name: '86',
+            value: 86
+        }, {
+            name: '130',
+            value: 130
+        }, {
+            name: '194',
+            value: 194
+        }, {
+            name: '244',
+            value: 244
+        }, {
+            name: '295',
+            value: 295
+        }, {
+            name: '347',
+            value: 347
+        }, {
+            name: '400',
+            value: 400
+        }, {
+            name: '454',
+            value: 454
+        }];
         let actives = [];
-        datas.forEach(function (item, index) {
+        datas.forEach(function(item, index) {
             // noinspection EqualityComparisonWithCoercionJS
             if (item.value == $('#binglu').val()) {
                 actives.push(index);
@@ -534,7 +520,7 @@
             },
             fixedOn: api.frameName,
             actives: actives
-        }, function (ret, err) {
+        }, function(ret, err) {
             if (ret) {
                 if (ret.eventType === 'ok') {
                     $('#binglu').val(ret.level1);
@@ -546,19 +532,19 @@
     }
 
     function initEvent() {
-        $api.addEvt($api.byId('closeWindow'), 'click', function () {
+        $api.addEvt($api.byId('closeWindow'), 'click', function() {
             api.closeWin();
         });
-        $api.addEvt($api.byId('level'), 'click', function () {
+        $api.addEvt($api.byId('level'), 'click', function() {
             showLevelSelect();
         });
-        $api.addEvt($api.byId('binglu'), 'click', function () {
+        $api.addEvt($api.byId('binglu'), 'click', function() {
             showBingluLevelSelect();
         });
     }
 
-    $(function () {
-        apiready = function () {
+    $(function() {
+        apiready = function() {
             initView();
             initEvent();
             initData();
