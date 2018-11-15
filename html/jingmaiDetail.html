@@ -184,7 +184,7 @@
 <header>
     <div class="header-button" id="closeWindow"><i class="iconfont icon-back"></i>返回</div>
     <div class="header-title">
-        <input type="text" id="level" value="功力一层" readonly placeholder="内功层数">
+        <input type="text" id="level" value="一周天" readonly placeholder="经脉等级">
     </div>
     <div class="header-button"></div>
 </header>
@@ -250,7 +250,7 @@
                 let $img = $h1.next();
                 $('#icon').hide().attr('src', 'http://9yin.azurewebsites.net/' + $img.attr('src')).show();
                 let $p = $img.next();
-                $('#description').empty().text($p.text());
+                $('#description').empty().html($p.html());
                 let $base = $p.next();
                 $('#base').empty().html($base.prop('outerHTML'));
                 let $select = $base.next().children('select');
@@ -261,7 +261,7 @@
                 $select.find('option').each(function (index) {
                     let $option = $(this);
                     selectData.datas.push({
-                        name: '功力' + numberToChinese(parseInt($option.text())) + '层',
+                        name: numberToChinese(parseInt($option.text())) + '周天',
                         value: $option.attr('value')
                     });
                     if (this.hasAttribute('selected')) {
@@ -317,7 +317,7 @@
                 colorActive: '#fff'
             },
             title: {
-                text: '内功层数',
+                text: '经脉等级',
                 size: 14,
                 h: 44,
                 bg: 'rgba(0,0,0,0.8)',

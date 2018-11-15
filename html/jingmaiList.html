@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width"/>
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <style>
+        html, body {
+            background-color: transparent;
+        }
+    </style>
+</head>
+<body>
+<div id="hide" hidden></div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    const special = ['jm_yangqiao', 'jm_yangqiao_wei', 'jm_yinqiao', 'jm_yinqiao_wei'];
+
+    function initView(datas) {
+        var groupList = api.require('groupList');
+        groupList.open({
+            rect: {
+                x: 0,
+                y: 0,
+                w: api.frameWidth,
+                h: api.frameHeight
+            },
+            styles: {
+                bg: 'rgba(0,0,0,0)',
+                title: {
+                    bg: '#4a4a4a',
+                    h: 25,
+                    align: 'left',
+                    color: '#fff',
+                    size: 15,
+                    marginT: 2,
+                    marginL: 15
+                },
+                cell: {
+                    bg: 'rgba(0,0,0,0)',
+                    h: 68,
+                    main: {
+                        marginL: 74,
+                        marginT: 17,
+                        color: '#fff',
+                        size: 13,
+                    },
+                    sub: {
+                        marginL: 74,
+                        marginT: 8,
+                        color: '#999999',
+                        size: 12,
+                    },
+                    icon: {
+                        marginL: 15,
+                        marginT: 9,
+                        w: 50,
+                        h: 50,
+                        corner: 2
+                    },
+                    line: {
+                        h: 1,
+                        marginL: 0,
+                        marginR: 0,
+                        bg: '#eee',
+                    }
+                }
+            },
+            datas: datas,
+            fixedOn: api.frameName,
+            fixed: true
+        }, function (ret, err) {
+            if (ret) {
+                if (ret.eventType !== 'show' && ret.cellData) {
+                    api.openWin({
+                        name: 'jingmaiDetail',
+                        url: './jingmaiDetail.html',
+                        pageParam: {
+                            url: ret.cellData.url,
+                            name: ret.cellData.main
+                        },
+                        bounces: false
+                    });
+                }
+            }
+        });
+    }
+
+    function initData() {
+        api.ajax({
+            url: 'http://9yin.azurewebsites.net/jingmai/',
+            dataType: 'text'
+        }, function (ret, err) {
+            if (ret) {
+                let $hide = $('#hide').html(ret);
+                let $details = $hide.find('ul');
+                let tempDataArray = [];
+                $details.each(function () {
+                    let that = this;
+                    let tempData = {
+                        title: '经脉',
+                        cells: function () {
+                            let tempCellArray = [];
+                            $(that).find('li > a').each(function () {
+                                let $a = $(this);
+                                let tempCell = {
+                                    icon: 'http://9yin.azurewebsites.net/images/icon/jingmai/' + $a.attr('href').replace(/\/1/, '') + '.png',
+                                    main: $a.text().replace(/[［\[][\u4e00-\u9fa5()]+[］\]]/, ''),
+                                    sub: '曾用名:' + function () {
+                                        let tempMatch = $a.text().match(/[［\[]([\u4e00-\u9fa5()]+)[］\]]/);
+                                        if (tempMatch != null)
+                                            return tempMatch[1];
+                                        return '无';
+                                    }(),
+                                    url: 'http://9yin.azurewebsites.net/jingmai/' + $a.attr('href')
+                                };
+                                tempCellArray.push(tempCell);
+                            });
+                            return tempCellArray;
+                        }()
+                    };
+                    tempDataArray.push(tempData);
+                });
+
+                initView(tempDataArray);
+                $hide.empty();
+            } else {
+                api.toast({
+                    msg: engine.name + ':数据获取失败',
+                    duration: 2000,
+                    location: 'bottom'
+                });
+            }
+            loading = false;
+        })
+    }
+
+    apiready = function () {
+        initData();
+    };
+</script>
+
+</html>
