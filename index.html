@@ -3,15 +3,15 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title>Hello APP</title>
-    <link rel="stylesheet" type="text/css" href="./css/api.css" />
+    <link rel="stylesheet" type="text/css" href="./css/api.css"/>
     <style type="text/css">
         html,
         body {
             height: 100%;
-            background: '#eee';
         }
 
         .wrap {
@@ -49,14 +49,14 @@
 </head>
 
 <body class="wrap">
-    <header>永乐大典</header>
-    <section class="flex">
+<header>永乐大典</header>
+<section class="flex">
 
-    </section>
-    <footer>
-        <P>Copyright &copy;<span id="year"></span>Maintained by @新接口运动衫</P>
-        <p>Programed by 清玄</p>
-    </footer>
+</section>
+<!--<footer>-->
+    <!--<P>Copyright &copy;<span id="year"></span>Maintained by @新接口运动衫</P>-->
+    <!--<p>Programed by 清玄</p>-->
+<!--</footer>-->
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
 <script>
@@ -72,7 +72,7 @@
 
         let NVNavigationBar = api.require('NVNavigationBar');
 
-        let initNavSelector = function() {
+        let initNavSelector = function () {
             const fontSize = 14;
             const padding = 10;
             NVNavigationBar.open({
@@ -115,23 +115,23 @@
                 }],
                 selectedIndex: 0,
                 id: navSelectorId
-            }, function(ret, err) {
+            }, function (ret, err) {
                 if (ret.eventType === 'click') {
-                    // api.setFrameGroupIndex({
-                    //     name: 'searchResultList',
-                    //     index: ret.index,
-                    //     scroll: true
-                    // });
+                    api.setFrameGroupIndex({
+                        name: 'navContent',
+                        index: ret.index,
+                        scroll: true
+                    });
                 } else {
 
                 }
             });
         };
 
-        let initNavContent = function() {
+        let initNavContent = function () {
             api.openFrameGroup({
                 name: 'navContent',
-                background: 'rgba(0,0,0,0.8)',
+                background: 'rgba(0,0,0,0)',
                 scrollEnabled: true,
                 rect: {
                     x: 0,
@@ -142,42 +142,47 @@
                 index: 0,
                 preload: 0,
                 frames: [{
+                    bgColor: 'rgba(0,0,0,0)',
                     name: 'contentFrame_neigong',
                     url: 'html/neigongList.html',
                     pageParam: {
                         tab: 'neigongList'
                     }
                 }, {
+                    bgColor: 'rgba(0,0,0,0.8)',
                     name: 'contentFrame_skill',
                     url: 'html/skillList.html',
                     pageParam: {
                         tab: 'skillList'
                     }
                 }, {
+                    bgColor: 'rgba(0,0,0,0)',
                     name: 'contentFrame_jingmai',
                     url: 'html/jingmaiList.html',
                     pageParam: {
                         tab: 'jingmaiList'
                     }
                 }, {
+                    bgColor: 'rgba(0,0,0,0.8)',
                     name: 'contentFrame_zaxiang',
                     url: 'html/zaxiangList.html',
                     pageParam: {
                         tab: 'zaxiangList'
                     }
                 }, {
+                    bgColor: 'rgba(0,0,0,0)',
                     name: 'contentFrame_about',
                     url: 'html/about.html',
                     pageParam: {
                         tab: 'about'
                     }
                 }],
-            }, function(ret, err) {
-                // NVNavigationBar.setSelected({
-                //     id: engineSelectorId,
-                //     index: ret.index,
-                //     select: true
-                // });
+            }, function (ret, err) {
+                NVNavigationBar.setSelected({
+                    id: navSelectorId,
+                    index: ret.index,
+                    select: true
+                });
             });
         };
 
@@ -192,7 +197,7 @@
     function exitApp() {
         api.addEventListener({
             name: 'keyback'
-        }, function(ret, err) {
+        }, function (ret, err) {
             api.toast({
                 msg: '再按一次返回键退出' + api.appName,
                 duration: 2000,
@@ -201,7 +206,7 @@
 
             api.addEventListener({
                 name: 'keyback'
-            }, function(ret, err) {
+            }, function (ret, err) {
                 api.closeWidget({
                     id: 'A6097622387850', //这里改成自己的应用ID
                     retData: {
@@ -211,13 +216,13 @@
                 });
             });
 
-            setTimeout(function() {
+            setTimeout(function () {
                 exitApp();
             }, 2000)
         });
     }
 
-    apiready = function() {
+    apiready = function () {
         initView();
         initEvent();
     }
