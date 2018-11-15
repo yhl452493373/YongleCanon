@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width"/>
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <style>
+        html, body {
+            background-color: transparent;
+        }
+
+        #content {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        #content, p {
+            color: #fff;
+        }
+
+        .copyright {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 14px;
+            color: #ddd;
+        }
+    </style>
+</head>
+<body>
+<div id="content"></div>
+<p class="copyright">Copyleft <span id="year">2018</span> Maintained by @新接口运动衫</p>
+<p class="copyright">Programed by 群雄逐鹿-清玄</p>
+<div id="hide" hidden></div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery-3.3.1.min.js"></script>
+<script>
+    apiready = function () {
+        document.getElementById('year').innerText = new Date().getFullYear() + '';
+        api.ajax({
+            url: 'http://9yin.azurewebsites.net/',
+            dataType: 'text'
+        }, function (ret, err) {
+            if (ret) {
+                let $hide = $('#hide').empty().html(ret);
+                let $header = $hide.find('header');
+                let $siblings = $header.siblings().not('img,footer');
+                $('#content').append($siblings);
+                $hide.empty();
+            }
+        });
+    }
+</script>
+</html>

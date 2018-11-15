@@ -54,8 +54,8 @@
 
 </section>
 <!--<footer>-->
-    <!--<P>Copyright &copy;<span id="year"></span>Maintained by @新接口运动衫</P>-->
-    <!--<p>Programed by 清玄</p>-->
+<!--<P>Copyright &copy;<span id="year"></span>Maintained by @新接口运动衫</P>-->
+<!--<p>Programed by 清玄</p>-->
 <!--</footer>-->
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
@@ -73,7 +73,7 @@
         let NVNavigationBar = api.require('NVNavigationBar');
 
         let initNavSelector = function () {
-            const fontSize = 14;
+            const fontSize = 16;
             const padding = 10;
             NVNavigationBar.open({
                 rect: {
@@ -105,9 +105,6 @@
                     alpha: 0
                 }, {
                     title: '经脉',
-                    alpha: 0
-                }, {
-                    title: '杂项',
                     alpha: 0
                 }, {
                     title: '关于',
@@ -142,7 +139,7 @@
                 index: 0,
                 preload: 0,
                 frames: [{
-                    bgColor: 'rgba(0,0,0,0)',
+                    bgColor: 'rgba(0,0,0,0.8)',
                     name: 'contentFrame_neigong',
                     url: 'html/neigongList.html',
                     pageParam: {
@@ -161,13 +158,6 @@
                     url: 'html/jingmaiList.html',
                     pageParam: {
                         tab: 'jingmaiList'
-                    }
-                }, {
-                    bgColor: 'rgba(0,0,0,0.8)',
-                    name: 'contentFrame_zaxiang',
-                    url: 'html/zaxiangList.html',
-                    pageParam: {
-                        tab: 'zaxiangList'
                     }
                 }, {
                     bgColor: 'rgba(0,0,0,0.8)',
