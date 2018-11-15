@@ -172,6 +172,35 @@
             padding: 5px;
         }
 
+        .org {
+            color: #ffa500;
+        }
+
+        .red {
+            color: #FF3030;
+        }
+
+        .blu {
+            color: #00FFFF;
+        }
+
+        #props {
+            margin-top: 10px;
+            display: none;
+        }
+
+        #props input {
+            text-align: center;
+            height: 24px;
+            border: none;
+            outline: none;
+            color: #fff;
+            background-color: transparent;
+            border-bottom: 1px solid #eee;
+            width: 100px;
+            margin: 0 10px;
+        }
+
         #upgrade {
             margin-top: 10px;
             word-break: break-all;
@@ -196,11 +225,23 @@
     <div id="base"></div>
     <div id="detail"></div>
     <div id="upgrade"></div>
+    <div id="props">
+        <form name="props_jm" onchange="calc_jm()">
+            <h3>属性计算</h3>
+            <font class="red">阳刚内功总等级：</font>
+            <input type="number" min="0" step="1" name="yaL" value="100"><br>
+            <font class="blu">阴柔内功总等级：</font>
+            <input type="number" min="0" step="1" name="yiL" value="100"><br>
+            <font class="org">太极内功总等级：</font>
+            <input type="number" min="0" step="1" name="tjL" value="100"></form>
+    </div>
 </section>
 <div id="hide" hidden></div>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../script/calc-scripts.js"></script>
+<script type="text/javascript" src="../script/storage_props.js"></script>
 <script type="text/javascript">
     let selectData = {};
 
@@ -236,6 +277,8 @@
         let headerH = $api.fixStatusBar(header);
     }
 
+    const special = ['jm_yangqiao', 'jm_yangqiao_wei', 'jm_yinqiao', 'jm_yinqiao_wei'];
+
     function initData(level) {
         let url = api.pageParam.url.replace(/\/\d+$/, '/' + (level || 1));
         api.ajax({
@@ -243,6 +286,7 @@
             dataType: 'text'
         }, function (ret, err) {
             if (ret) {
+                $('#props').hide();
                 let $hide = $('#hide').empty();
                 $hide.html(ret);
                 let $h1 = $hide.find('h1');
@@ -273,6 +317,11 @@
                 $('#detail').empty().html($detail.prop('outerHTML')).find('tr').last().remove();
                 $('#upgrade').html($detail.find('td').last().html());
                 $hide.empty();
+                special.forEach(function (item) {
+                    if (url.indexOf(item) !== -1) {
+                        $('#props').show();
+                    }
+                });
             }
         });
     }
