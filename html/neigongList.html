@@ -9,7 +9,7 @@
     <title>Hello APP</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css"/>
     <style>
-        html,body{
+        html, body {
             background-color: transparent;
         }
     </style>
@@ -65,12 +65,16 @@
         ng_task_001: '/skill/skill_ng003'
     };
 
+    let originalDatas = [];
+
+    let groupList;
+
     function initView(datas) {
-        var groupList = api.require('groupList');
+        groupList = api.require('groupList');
         groupList.open({
             rect: {
                 x: 0,
-                y: 0,
+                y: 32,
                 w: api.frameWidth,
                 h: api.frameHeight
             },
@@ -131,8 +135,73 @@
                         bounces: false
                     });
                 }
+                if (ret.eventType === 'show') {
+                    initSearchBar();
+                }
             }
         });
+    }
+
+    function initSearchBar() {
+        let UIInput = api.require('UIInput');
+        UIInput.open({
+            rect: {
+                x: 0,
+                y: 0,
+                w: api.frameWidth,
+                h: 32
+            },
+            styles: {
+                bgColor: 'rgba(0,0,0,0)',
+                size: 14,
+                color: '#fff',
+                placeholder: {
+                    color: '#ccc'
+                }
+            },
+            autoFocus: false,
+            maxRows: 1,
+            placeholder: '请输入关键字进行搜索',
+            keyboardType: 'search',
+            fixedOn: api.frameName
+        }, function (ret) {
+            if (ret.eventType === 'search') {
+                UIInput.value(function (ret) {
+                    let searchdData;
+                    if (ret.msg.trim().length !== 0) {
+                        searchdData = searchData(ret.msg, originalDatas);
+                    } else {
+                        searchdData = originalDatas;
+                    }
+                    groupList.reloadData({
+                        datas: searchdData
+                    });
+                });
+            }
+        });
+    }
+
+    function searchData(text, datas) {
+        let searchResult = [];
+        datas.forEach(function (data, index) {
+            let tempDatas = {
+                title: null,
+                cells: []
+            };
+            data.cells.forEach(function (cell) {
+                if (cell.full.indexOf(text) !== -1) {
+                    tempDatas.title = data.title;
+                    tempDatas.cells.push({
+                        icon: cell.icon,
+                        main: cell.main,
+                        sub: cell.sub
+                    });
+                }
+            });
+            if (tempDatas.title != null)
+                searchResult.push(tempDatas);
+        });
+        return searchResult;
     }
 
     function initData() {
@@ -158,6 +227,7 @@
                                         return 'http://9yin.azurewebsites.net/images/icon' + (iconMap[iconMapKey] || '/neigong/' + iconMapKey) + '.png';
                                     }(),
                                     main: $a.text().replace(/[［\[][\u4e00-\u9fa5()]+[］\]]/, ''),
+                                    full: $a.text(),
                                     sub: '曾用名:' + function () {
                                         let tempMatch = $a.text().match(/[［\[]([\u4e00-\u9fa5()]+)[］\]]/);
                                         if (tempMatch != null)
@@ -174,6 +244,7 @@
                     tempDataArray.push(tempData);
                 });
 
+                originalDatas = tempDataArray;
                 initView(tempDataArray);
             } else {
                 api.toast({
