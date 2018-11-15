@@ -9,7 +9,7 @@
     <title>Hello APP</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css"/>
     <style>
-        html,body{
+        html, body {
             background-color: transparent;
         }
     </style>
@@ -75,10 +75,10 @@
             fixed: true
         }, function (ret, err) {
             if (ret) {
-                if (ret.eventType !== 'show') {
+                if (ret.eventType !== 'show' && ret.cellData) {
                     api.openWin({
-                        name: 'neigongDetail',
-                        url: './neigongDetail.html',
+                        name: 'skillDetail',
+                        url: './skillDetail.html',
                         pageParam: {
                             url: ret.cellData.url,
                             name: ret.cellData.main

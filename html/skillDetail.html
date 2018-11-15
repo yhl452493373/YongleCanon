@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/iconfont/iconfont.css"/>
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+            color: #fff;
+        }
+
+        body {
+            background-color: rgba(0, 0, 0, .8);
+        }
+
+        .wrap {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-flex-flow: column;
+        }
+
+        header {
+            height: 44px;
+            width: 100%;
+            text-align: center;
+            background-color: transparent;
+            color: #fff;
+            line-height: 44px;
+            font-size: 20px;
+            display: flex;
+        }
+
+        header .header-button {
+            text-align: center;
+            flex-basis: 4rem;
+            height: 44px;
+            line-height: 44px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        header .header-title {
+            flex: 1;
+            color: #fff;
+            border: none;
+            outline: none;
+            padding: 0 1rem;
+            box-sizing: border-box;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .flex {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+        }
+
+        section.flex {
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        footer {
+            height: 30px;
+            width: 100%;
+            font-size: 12px;
+            background-color: transparent;
+            color: white;
+            line-height: 15px;
+            text-align: center;
+        }
+
+        #level {
+            border: none;
+            border-radius: 0;
+            background: transparent;
+            text-align: center;
+            width: 100%;
+            font-size: 20px;
+            color: #fff;
+        }
+
+        #title h1 {
+            text-align: center;
+            font-size: 20px;
+            padding: 0 10px;
+            margin: 0;
+            line-height: 50px;
+        }
+
+        #description {
+            text-indent: 2rem;
+            margin-top: 10px;
+            word-break: break-all;
+        }
+
+        #detail {
+            margin-top: 10px;
+        }
+
+        #detail table {
+            table-layout: fixed;
+            width: 100%;
+            border-top: 1px solid #eee;
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+        }
+
+        #detail table tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        #detail table th {
+            width: 80px;
+            border-right: 1px solid #eee;
+            padding: 5px;
+            text-align: center;
+        }
+
+        #detail table th img {
+            width: 50px;
+            height: 50px;
+            border-radius: 2px;
+        }
+
+        #detail table td {
+            width: auto;
+            padding: 5px;
+        }
+
+        #props {
+            margin-top: 10px;
+            display: none;
+        }
+
+        #props input {
+            text-align: center;
+            height: 24px;
+            border: none;
+            outline: none;
+            color: #fff;
+            background-color: transparent;
+            border-bottom: 1px solid #eee;
+            width: 80px;
+            margin: 0 10px;
+        }
+
+        .yel {
+            color: #FFFF00;
+        }
+
+        .red {
+            color: #FF3030;
+        }
+
+        .blu {
+            color: #00FFFF;
+        }
+
+        .gre {
+            color: #00FF00;
+        }
+
+        .pur {
+            color: #F728FF;
+        }
+    </style>
+</head>
+
+<body class="wrap">
+<header>
+    <div class="header-button" id="closeWindow"><i class="iconfont icon-back"></i>返回</div>
+    <div class="header-title">
+        <input type="text" id="level" value="功力一层" readonly placeholder="内功层数">
+    </div>
+    <div class="header-button"></div>
+</header>
+<section class="flex">
+    <div id="title"></div>
+    <div id="description"></div>
+    <script id="const"></script>
+    <div id="base"></div>
+    <div id="detail">
+        <table>
+
+        </table>
+    </div>
+    <div id="props">
+        <form name="props" onchange="calc();calc_damage()">
+            <h3>属性计算</h3>
+            <font class="yel">武器伤害：</font>
+            <input type="number" min="0" step="1" name="minM"> ~ <input type="number" min="0" step="1" name="maxM"><br>
+            <font class="yel">射击伤害：</font>
+            <input type="number" min="0" step="1" name="minS"> ~ <input type="number" min="0" step="1" name="maxS"><br>
+            <font class="red">近身威力：</font>
+            <input type="number" min="0" step="1" name="meP"><br>
+            <font class="blu">内功威力：</font>
+            <input type="number" min="0" step="1" name="maP"><br>
+            <font class="gre">远程威力：</font>
+            <input type="number" min="0" step="1" name="shP"><br>
+            <font class="pur">兵　　录：</font>
+            <input type="number" value="0" min="0" max="454" id="binglu" name="binglu" readonly>
+            <!--<select name="binglu">-->
+            <!--<option value="0">0</option>-->
+            <!--<option value="5">5</option>-->
+            <!--<option value="8">8</option>-->
+            <!--<option value="11">11</option>-->
+            <!--<option value="17">17</option>-->
+            <!--<option value="26">26</option>-->
+            <!--<option value="38">38</option>-->
+            <!--<option value="58">58</option>-->
+            <!--<option value="86">86</option>-->
+            <!--<option value="130">130</option>-->
+            <!--<option value="194">194</option>-->
+            <!--<option value="244">244</option>-->
+            <!--<option value="295">295</option>-->
+            <!--<option value="347">347</option>-->
+            <!--<option value="400">400</option>-->
+            <!--<option value="454">454</option>-->
+            <!--</select>-->
+        </form>
+    </div>
+</section>
+<div id="hide" hidden></div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../script/calc-scripts.js"></script>
+<script type="text/javascript" src="../script/storage_props.js"></script>
+<script type="text/javascript">
+    let selectData = {};
+
+    function numberToChinese(section) {
+        const chnNumChar = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+        const chnUnitSection = ["", "万", "亿", "万亿", "亿亿"];
+        const chnUnitChar = ["", "十", "百", "千"];
+        let strIns = '',
+            chnStr = '';
+        let unitPos = 0;
+        let zero = true;
+        while (section > 0) {
+            let v = section % 10;
+            if (v === 0) {
+                if (!zero) {
+                    zero = true;
+                    chnStr = chnNumChar[v] + chnStr;
+                }
+            } else {
+                zero = false;
+                strIns = chnNumChar[v];
+                strIns += chnUnitChar[unitPos];
+                chnStr = strIns + chnStr;
+            }
+            unitPos++;
+            section = Math.floor(section / 10);
+        }
+        return chnStr;
+    }
+
+    function initView() {
+        let header = $api.dom('header');
+        let headerH = $api.fixStatusBar(header);
+    }
+
+    function initData(level) {
+        let url = api.pageParam.url.replace(/\/\d+$/, '/' + (level || 1));
+        api.ajax({
+            url: url,
+            dataType: 'text'
+        }, function (ret, err) {
+            if (ret) {
+                $('#props').hide();
+                let $hide = $('#hide').empty();
+                $hide.html(ret);
+                let $h1 = $hide.find('h1');
+                $('#title').empty().html($h1.prop('outerHTML'));
+                let $p = $h1.next();
+                $('#description').empty().text($p.text());
+                let $const = $p.next();
+                $('#const').html($const.html());
+                let $select = $const.next().children('select');
+                selectData = $.extend({}, {
+                    actives: [],
+                    datas: []
+                });
+                $select.find('option').each(function (index) {
+                    let $option = $(this);
+                    selectData.datas.push({
+                        name: '功力' + numberToChinese(parseInt($option.text())) + '层',
+                        value: $option.attr('value')
+                    });
+                    if (this.hasAttribute('selected')) {
+                        selectData.actives = [index];
+                    }
+                });
+
+                let $detail = $select.parent().next();
+                let trStringArray = [];
+                $detail.find('tr').each(function () {
+                    trStringArray.push(assemblyTr($(this)));
+                });
+                $('#detail table').empty().html(trStringArray.join(''));
+                $hide.empty();
+                calc();
+                $('#props').show();
+            }
+        });
+    }
+
+    function showLevelSelect() {
+        let UIActionSelector = api.require('UIActionSelector');
+        UIActionSelector.open({
+            datas: selectData.datas,
+            layout: {
+                row: 7,
+                col: 1,
+                height: 30,
+                size: 12,
+                sizeActive: 14,
+                rowSpacing: 5,
+                colSpacing: 10,
+                maskBg: 'rgba(0,0,0,0.2)',
+                bg: '#fff',
+                color: '#999',
+                colorActive: '#f00',
+                colorSelected: '#f00'
+            },
+            animation: true,
+            cancel: {
+                text: '取消',
+                size: 12,
+                w: 60,
+                h: 30,
+                bg: 'rgba(0,0,0,0)',
+                bgActive: '#ccc',
+                color: '#fff',
+                colorActive: '#fff'
+            },
+            ok: {
+                text: '确定',
+                size: 12,
+                w: 60,
+                h: 30,
+                bg: 'rgba(0,0,0,0)',
+                bgActive: '#ccc',
+                color: '#fff',
+                colorActive: '#fff'
+            },
+            title: {
+                text: '内功层数',
+                size: 14,
+                h: 44,
+                bg: 'rgba(0,0,0,0.8)',
+                color: '#fff'
+            },
+            fixedOn: api.frameName,
+            actives: selectData.actives
+        }, function (ret, err) {
+            if (ret) {
+                if (ret.eventType === 'ok') {
+                    let levelValue = ret.selectedInfo[0].value;
+                    $('#level').val(ret.level1);
+                    initData(levelValue);
+                }
+            }
+        });
+    }
+
+    function assemblyTr($tr) {
+        let $children = $tr.children('th,td');
+        return '<tr>' +
+            '                <th rowspan="2">' +
+            '                   <img src="http://9yin.azurewebsites.net' + $children.eq(1).children('img').attr('src') + '">' +
+            '                   <div>' + $children.eq(0).children('font').prop('outerHTML') + '</div>' +
+            '               </th>' +
+            '                <td>' +
+            '                    <table>' +
+            '                        <tr>' +
+            '                            <td>' + ($children.eq(2).text().trim().length === 0 ? '未知' : $children.eq(2).text()) + '</td>' +
+            '                            <td>' + $children.eq(3).text() + '招</td>' +
+            '                            <td>' + $children.eq(4).text() + '</td>' +
+            '                        </tr>' +
+            '                        <tr>' +
+            '                            <td>' + $children.eq(5).html() + '</td>' +
+            '                            <td>' + $children.eq(6).html() + '距离</td>' +
+            '                            <td>' + $children.eq(7).html() + '回气</td>' +
+            '                        </tr>' +
+            '                        <tr>' +
+            '                            <td>' + ($children.eq(8).text().trim().length === 0 ? '无' : $children.eq(8).html()) + '蓝耗</td>' +
+            '                            <td colspan="2">' + $children.eq(10).text() + '</td>' +
+            '                        </tr>' +
+            '                    </table>' +
+            '                </td>' +
+            '               ' + function () {
+                let tempScript = [];
+                $tr.children('script').each(function () {
+                    tempScript.push(this.outerHTML);
+                });
+                return tempScript.join('');
+            }() +
+            '            </tr>' +
+            '            <tr>' +
+            '                <td>' + $children.eq(9).html() + '</td>' +
+            '            </tr>';
+    }
+
+    function showBingluLevelSelect() {
+        let UIActionSelector = api.require('UIActionSelector');
+        const datas = [
+            {
+                name: '0',
+                value: 0
+            },
+            {
+                name: '5',
+                value: 5
+            },
+            {
+                name: '8',
+                value: 8
+            },
+            {
+                name: '11',
+                value: 11
+            },
+            {
+                name: '17',
+                value: 17
+            },
+            {
+                name: '26',
+                value: 26
+            },
+            {
+                name: '38',
+                value: 38
+            },
+            {
+                name: '58',
+                value: 58
+            },
+            {
+                name: '86',
+                value: 86
+            },
+            {
+                name: '130',
+                value: 130
+            },
+            {
+                name: '194',
+                value: 194
+            },
+            {
+                name: '244',
+                value: 244
+            },
+            {
+                name: '295',
+                value: 295
+            },
+            {
+                name: '347',
+                value: 347
+            },
+            {
+                name: '400',
+                value: 400
+            },
+            {
+                name: '454',
+                value: 454
+            }
+        ];
+        let actives = [];
+        datas.forEach(function (item, index) {
+            // noinspection EqualityComparisonWithCoercionJS
+            if (item.value == $('#binglu').val()) {
+                actives.push(index);
+            }
+        });
+        UIActionSelector.open({
+            datas: datas,
+            layout: {
+                row: 7,
+                col: 1,
+                height: 30,
+                size: 12,
+                sizeActive: 14,
+                rowSpacing: 5,
+                colSpacing: 10,
+                maskBg: 'rgba(0,0,0,0.2)',
+                bg: '#fff',
+                color: '#999',
+                colorActive: '#f00',
+                colorSelected: '#f00'
+            },
+            animation: true,
+            cancel: {
+                text: '取消',
+                size: 12,
+                w: 60,
+                h: 30,
+                bg: 'rgba(0,0,0,0)',
+                bgActive: '#ccc',
+                color: '#fff',
+                colorActive: '#fff'
+            },
+            ok: {
+                text: '确定',
+                size: 12,
+                w: 60,
+                h: 30,
+                bg: 'rgba(0,0,0,0)',
+                bgActive: '#ccc',
+                color: '#fff',
+                colorActive: '#fff'
+            },
+            title: {
+                text: '内功层数',
+                size: 14,
+                h: 44,
+                bg: 'rgba(0,0,0,0.8)',
+                color: '#fff'
+            },
+            fixedOn: api.frameName,
+            actives: actives
+        }, function (ret, err) {
+            if (ret) {
+                if (ret.eventType === 'ok') {
+                    $('#binglu').val(ret.level1);
+                    calc();
+                    calc_damage();
+                }
+            }
+        });
+    }
+
+    function initEvent() {
+        $api.addEvt($api.byId('closeWindow'), 'click', function () {
+            api.closeWin();
+        });
+        $api.addEvt($api.byId('level'), 'click', function () {
+            showLevelSelect();
+        });
+        $api.addEvt($api.byId('binglu'), 'click', function () {
+            showBingluLevelSelect();
+        });
+    }
+
+    $(function () {
+        apiready = function () {
+            initView();
+            initEvent();
+            initData();
+        };
+    });
+</script>
+
+</html>
