@@ -3,10 +3,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="viewport"
+          content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width"/>
     <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
     <title>Hello APP</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
 </head>
 
 <body>
@@ -15,6 +16,51 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+    const iconMap = {
+        ng_dth_001: '/skill/skill_ng003',
+        ng_jh_102: '/skill/skill_ng001',
+        ng_jh_103: '/skill/skill_ng002',
+        ng_jh_104: '/skill/skill_ng001',
+        ng_jh_106: '/skill/skill_ng001',
+        ng_jh_107: '/skill/skill_ng002',
+        ng_jh_202: '/neigong/ng_jh_cygj',
+        ng_jh_204: '/neigong/ng_jh_205',
+        ng_jh_205: '/neigong/ng_jh_205a',
+        ng_jh_206: '/skill/skill_ng001',
+        ng_jh_207: '/skill/skill_ng003',
+        ng_jh_210: '/neigong/ng_jh_210_xia',
+        ng_jh_211: '/neigong/ng_jh_210_kuang',
+        ng_jh_212: '/neigong/ng_jh_210_xie',
+        ng_jh_213: '/neigong/ng_jh_210_e',
+        ng_jh_301: '/neigong/ng_jh_304',
+        ng_jh_303: '/skill/skill_ng001',
+        ng_jh_401: '/skill/skill_ng001',
+        ng_jh_403: '/skill/skill_ng003',
+        ng_jh_404: '/skill/skill_ng002',
+        ng_jh_405: '/skill/skill_ng001',
+        ng_jh_406: '/skill/skill_ng001',
+        ng_jh_502: '/skill/skill_ng001',
+        ng_jh_503: '/skill/skill_ng002',
+        ng_jh_504: '/skill/skill_ng001',
+        ng_jh_505: '/skill/skill_ng002',
+        ng_jm_01: '/skill/skill_ng003',
+        ng_jm_02: '/skill/skill_ng003',
+        ng_jm_03: '/skill/skill_ng003',
+        ng_jm_04: '/skill/skill_ng003',
+        ng_jm_05: '/skill/skill_ng003',
+        ng_jm_06: '/skill/skill_ng003',
+        ng_jm_07: '/skill/skill_ng003',
+        ng_jm_08: '/skill/skill_ng003',
+        ng_jm_09: '/skill/skill_ng003',
+        ng_jm_10: '/skill/skill_ng003',
+        ng_jm_11: '/skill/skill_ng003',
+        ng_jm_12: '/skill/skill_ng003',
+        ng_jm_13: '/skill/skill_ng003',
+        ng_jm_14: '/skill/skill_ng003',
+        ng_jm_15: '/skill/skill_ng003',
+        ng_task_001: '/skill/skill_ng003'
+    };
+
     function initView(datas) {
         var groupList = api.require('groupList');
         groupList.open({
@@ -68,7 +114,7 @@
             datas: datas,
             fixedOn: api.frameName,
             fixed: true
-        }, function(ret, err) {
+        }, function (ret, err) {
             if (ret) {
                 if (ret.eventType !== 'show') {
                     api.openWin({
@@ -89,24 +135,27 @@
         api.ajax({
             url: 'http://9yin.azurewebsites.net/neigong/',
             dataType: 'text'
-        }, function(ret, err) {
+        }, function (ret, err) {
             if (ret) {
                 let $html = $(ret);
                 let $details = $html.find('ul');
                 let tempDataArray = [];
-                $details.each(function() {
+                $details.each(function () {
                     let that = this;
                     let tempData = {
                         title: $(this).prev().text(),
-                        cells: function() {
+                        cells: function () {
                             let tempCellArray = [];
-                            $(that).find('li > a').each(function() {
+                            $(that).find('li > a').each(function () {
                                 let $a = $(this);
                                 let tempCell = {
-                                    icon: 'http://9yin.azurewebsites.net/images/icon' + $a.attr('href').replace(/\/1/, '') + '.png',
-                                    main: $a.text().replace(/［[\u4e00-\u9fa5]+］/, ''),
-                                    sub: '曾用名:' + function() {
-                                        let tempMatch = $a.text().match(/［([\u4e00-\u9fa5]+)］/);
+                                    icon: function () {
+                                        let iconMapKey = $a.attr('href').replace(/\/1/, '').replace('/neigong/', '');
+                                        return 'http://9yin.azurewebsites.net/images/icon' + (iconMap[iconMapKey] || '/neigong/' + iconMapKey) + '.png';
+                                    }(),
+                                    main: $a.text().replace(/[［\[][\u4e00-\u9fa5()]+[］\]]/, ''),
+                                    sub: '曾用名:' + function () {
+                                        let tempMatch = $a.text().match(/[［\[]([\u4e00-\u9fa5()]+)[］\]]/);
                                         if (tempMatch != null)
                                             return tempMatch[1];
                                         return '无';
@@ -133,7 +182,7 @@
         })
     }
 
-    apiready = function() {
+    apiready = function () {
         getCategory();
     };
 </script>

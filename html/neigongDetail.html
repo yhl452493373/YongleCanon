@@ -3,11 +3,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title>title</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css" />
-    <link rel="stylesheet" type="text/css" href="../css/iconfont/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/iconfont/iconfont.css"/>
     <style type="text/css">
         html,
         body {
@@ -80,7 +81,7 @@
 
         #level {
             border: none;
-            border-radius: none;
+            border-radius: 0;
             background: transparent;
             text-align: center;
             width: 100%;
@@ -100,15 +101,22 @@
             line-height: 50px;
         }
 
+        #title {
+            vertical-align: middle;
+        }
+
         #icon {
             width: 50px;
             height: 50px;
             display: none;
+            border-radius: 2px;
+            vertical-align: middle;
         }
 
         #description {
             text-indent: 2rem;
             margin-top: 10px;
+            word-break: break-all;
         }
 
         #base {
@@ -118,26 +126,79 @@
         #detail {
             margin-top: 10px;
         }
+
+        #base table {
+            table-layout: fixed;
+            width: 100%;
+            border-top: 1px solid #eee;
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+        }
+
+        #base table tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        #base table th {
+            width: 80px;
+            border-right: 1px solid #eee;
+            padding: 5px;
+        }
+
+        #base table td {
+            width: auto;
+            padding: 5px;
+        }
+
+        #detail table {
+            table-layout: fixed;
+            width: 100%;
+            border-top: 1px solid #eee;
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+        }
+
+        #detail table tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        #detail table th {
+            width: 80px;
+            border-right: 1px solid #eee;
+            padding: 5px;
+        }
+
+        #detail table td {
+            width: auto;
+            padding: 5px;
+        }
+
+        #upgrade {
+            margin-top: 10px;
+            word-break: break-all;
+            text-indent: 2em;
+        }
     </style>
 </head>
 
 <body class="wrap">
-    <header>
-        <div class="header-button" id="closeWindow"><i class="iconfont icon-back"></i>返回</div>
-        <div class="header-title">
-            <input type="text" id="level" value="功力一层" readonly>
-        </div>
-        <div class="header-button"></div>
-    </header>
-    <section class="flex">
-        <div id="titleContainer">
-            <img src="" id="icon" align="middle"><span id="title"></span>
-        </div>
-        <div id="description"></div>
-        <div id="base"></div>
-        <div id="detail"></div>
-    </section>
-    <div id="hide" hidden></div>
+<header>
+    <div class="header-button" id="closeWindow"><i class="iconfont icon-back"></i>返回</div>
+    <div class="header-title">
+        <input type="text" id="level" value="功力一层" readonly placeholder="内功层数">
+    </div>
+    <div class="header-button"></div>
+</header>
+<section class="flex">
+    <div id="titleContainer">
+        <img src="" id="icon" align="middle"><span id="title"></span>
+    </div>
+    <div id="description"></div>
+    <div id="base"></div>
+    <div id="detail"></div>
+    <div id="upgrade"></div>
+</section>
+<div id="hide" hidden></div>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/jquery-3.3.1.min.js"></script>
@@ -148,12 +209,12 @@
         const chnNumChar = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
         const chnUnitSection = ["", "万", "亿", "万亿", "亿亿"];
         const chnUnitChar = ["", "十", "百", "千"];
-        var strIns = '',
+        let strIns = '',
             chnStr = '';
-        var unitPos = 0;
-        var zero = true;
+        let unitPos = 0;
+        let zero = true;
         while (section > 0) {
-            var v = section % 10;
+            let v = section % 10;
             if (v === 0) {
                 if (!zero) {
                     zero = true;
@@ -181,7 +242,7 @@
         api.ajax({
             url: url,
             dataType: 'text'
-        }, function(ret, err) {
+        }, function (ret, err) {
             if (ret) {
                 let $hide = $('#hide').empty();
                 $hide.html(ret);
@@ -190,7 +251,7 @@
                 let $img = $h1.next();
                 $('#icon').hide().attr('src', 'http://9yin.azurewebsites.net/' + $img.attr('src')).show();
                 let $p = $img.next();
-                $('#description').empty().text($p.text())
+                $('#description').empty().text($p.text());
                 let $base = $p.next();
                 $('#base').empty().html($base.prop('outerHTML'));
                 let $select = $base.next().children('select');
@@ -198,7 +259,7 @@
                     actives: [],
                     datas: []
                 });
-                $select.find('option').each(function(index) {
+                $select.find('option').each(function (index) {
                     let $option = $(this);
                     selectData.datas.push({
                         name: '功力' + numberToChinese(parseInt($option.text())) + '层',
@@ -210,7 +271,9 @@
                 });
 
                 let $detail = $select.parent().next();
-                $('#detail').empty().html($detail.prop('outerHTML'));
+                $('#detail').empty().html($detail.prop('outerHTML')).find('tr').last().remove();
+                $('#upgrade').html($detail.find('td').last().html());
+                $hide.empty();
             }
         });
     }
@@ -220,7 +283,7 @@
         UIActionSelector.open({
             datas: selectData.datas,
             layout: {
-                row: 5,
+                row: 7,
                 col: 1,
                 height: 30,
                 size: 12,
@@ -229,7 +292,7 @@
                 colSpacing: 10,
                 maskBg: 'rgba(0,0,0,0.2)',
                 bg: '#fff',
-                color: '#888',
+                color: '#999',
                 colorActive: '#f00',
                 colorSelected: '#f00'
             },
@@ -237,33 +300,33 @@
             cancel: {
                 text: '取消',
                 size: 12,
-                w: 90,
-                h: 35,
-                bg: '#fff',
+                w: 60,
+                h: 30,
+                bg: 'rgba(0,0,0,0)',
                 bgActive: '#ccc',
-                color: '#888',
+                color: '#fff',
                 colorActive: '#fff'
             },
             ok: {
                 text: '确定',
                 size: 12,
-                w: 90,
-                h: 35,
-                bg: '#fff',
+                w: 60,
+                h: 30,
+                bg: 'rgba(0,0,0,0)',
                 bgActive: '#ccc',
-                color: '#888',
+                color: '#fff',
                 colorActive: '#fff'
             },
             title: {
                 text: '内功层数',
-                size: 12,
+                size: 14,
                 h: 44,
-                bg: '#eee',
-                color: '#888'
+                bg: 'rgba(0,0,0,0.8)',
+                color: '#fff'
             },
             fixedOn: api.frameName,
             actives: selectData.actives
-        }, function(ret, err) {
+        }, function (ret, err) {
             if (ret) {
                 if (ret.eventType === 'ok') {
                     let levelValue = ret.selectedInfo[0].value;
@@ -275,16 +338,16 @@
     }
 
     function initEvent() {
-        $api.addEvt($api.byId('closeWindow'), 'click', function() {
+        $api.addEvt($api.byId('closeWindow'), 'click', function () {
             api.closeWin();
         });
-        $api.addEvt($api.byId('level'), 'click', function() {
+        $api.addEvt($api.byId('level'), 'click', function () {
             showSelect();
         });
     }
 
-    $(function() {
-        apiready = function() {
+    $(function () {
+        apiready = function () {
             initView();
             initEvent();
             initData();

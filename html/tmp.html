@@ -1,201 +1,437 @@
 <!DOCTYPE html>
 <html>
-<head><title>逍遥游［逍遥心法］</title>
-    <link rel="shortcut icon" href="/images/favicon.ico">
-    <link rel="stylesheet" href="/stylesheets/style.css">
-    <meta charset="UTF-8">
-    <meta name="keywords" content="永乐大典,九阴,九阴真经,模拟器,武学,内功,经脉,套路,满层,加成">
-    <script src="/javascripts/scripts.js"></script>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css">
+    <link rel="stylesheet" type="text/css" href="../css/iconfont/iconfont.css">
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+            color: #fff;
+        }
+
+        body {
+            background-color: rgba(0, 0, 0, .8);
+        }
+
+        .wrap {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-flex-flow: column;
+        }
+
+        header {
+            height: 44px;
+            width: 100%;
+            text-align: center;
+            background-color: transparent;
+            color: #fff;
+            line-height: 44px;
+            font-size: 20px;
+            display: flex;
+        }
+
+        header .header-button {
+            text-align: center;
+            flex-basis: 4rem;
+            height: 44px;
+            line-height: 44px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        header .header-title {
+            flex: 1;
+            color: #fff;
+            border: none;
+            outline: none;
+            padding: 0 1rem;
+            box-sizing: border-box;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .flex {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+        }
+
+        section.flex {
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        footer {
+            height: 30px;
+            width: 100%;
+            font-size: 12px;
+            background-color: transparent;
+            color: white;
+            line-height: 15px;
+            text-align: center;
+        }
+
+        #level {
+            border: none;
+            border-radius: 0;
+            background: transparent;
+            text-align: center;
+            width: 100%;
+            font-size: 20px;
+            color: #fff;
+        }
+
+        #titleContainer {
+            text-align: center;
+        }
+
+        #title h1 {
+            text-align: center;
+            font-size: 20px;
+            padding: 0 10px;
+            margin: 0;
+            line-height: 50px;
+        }
+
+        #icon {
+            width: 50px;
+            height: 50px;
+            display: none;
+            border-radius: 2px;
+        }
+
+        #description {
+            text-indent: 2rem;
+            margin-top: 10px;
+            word-break: break-all;
+        }
+
+        #base {
+            margin-top: 10px;
+        }
+
+        #detail {
+            margin-top: 10px;
+        }
+
+        #base table {
+            table-layout: fixed;
+            width: 100%;
+            border-top: 1px solid #eee;
+            border-left:1px solid #eee;
+            border-right: 1px solid #eee;
+        }
+
+        #base table tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        #base table th {
+            width: 100px;
+            border-right: 1px solid #eee;
+            padding: 5px;
+        }
+
+        #base table td {
+            width: auto;
+            padding: 5px;
+        }
+
+        #detail table {
+            table-layout: fixed;
+            width: 100%;
+            border-top: 1px solid #eee;
+            border-left:1px solid #eee;
+            border-right: 1px solid #eee;
+        }
+
+        #detail table tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        #detail table th {
+            width: 100px;
+            border-right: 1px solid #eee;
+            padding: 5px;
+        }
+
+        #detail table td {
+            width: auto;
+            padding: 5px;
+        }
+    </style>
 </head>
-<body>
-<header><a href="/"><img src="/images/logo.png" alt="永乐大典"></a>
-    <p><a href="/neigong/">内功 </a><a href="/skill/">武学 </a><a href="/jingmai/">经脉 </a><a target="_blank"
-                                                                                         href="http://ageofwushu.azurewebsites.net/">杂项 </a><a
-            href="/about/">关于</a></p></header>
-<h1 style="color:#c95851">逍遥游［逍遥心法］</h1><img src="/images/icon/neigong/ng_gb_001.png">
-<p>丐帮基础内功心法，“除却五欲，疮疣解脱，逍遥自在。”丐帮弟子素来无拘无束，洒脱自在，以逍遥行世间。</p>
-<table>
-    <tr>
-        <th>归属</th>
-        <td>丐帮</td>
-    </tr>
-    <tr>
-        <th>属性</th>
-        <td>阳刚</td>
-    </tr>
-    <tr>
-        <th>怒气上限</th>
-        <td>90</td>
-    </tr>
-</table>
-<p><font class="yel">功力：</font><select id="sel_lv"
-                                       onchange="if (this.value) window.location.href='/neigong/ng_gb_001/'+this.value"
-                                       class="lvl">
-    <option value="1" selected>1层</option>
-    <option value="2">2层</option>
-    <option value="3">3层</option>
-    <option value="4">4层</option>
-    <option value="5">5层</option>
-    <option value="6">6层</option>
-    <option value="7">7层</option>
-    <option value="8">8层</option>
-    <option value="9">9层</option>
-    <option value="10">10层</option>
-    <option value="11">11层</option>
-    <option value="12">12层</option>
-    <option value="13">13层</option>
-    <option value="14">14层</option>
-    <option value="15">15层</option>
-    <option value="16">16层</option>
-    <option value="17">17层</option>
-    <option value="18">18层</option>
-    <option value="19">19层</option>
-    <option value="20">20层</option>
-    <option value="21">21层</option>
-    <option value="22">22层</option>
-    <option value="23">23层</option>
-    <option value="24">24层</option>
-    <option value="25">25层</option>
-    <option value="26">26层</option>
-    <option value="27">27层</option>
-    <option value="28">28层</option>
-    <option value="29">29层</option>
-    <option value="30">30层</option>
-    <option value="31">31层</option>
-    <option value="32">32层</option>
-    <option value="33">33层</option>
-    <option value="34">34层</option>
-    <option value="35">35层</option>
-    <option value="36">36层</option>
-    <option value="37">37层</option>
-    <option value="38">38层</option>
-    <option value="39">39层</option>
-    <option value="40">40层</option>
-    <option value="41">41层</option>
-    <option value="42">42层</option>
-    <option value="43">43层</option>
-    <option value="44">44层</option>
-    <option value="45">45层</option>
-    <option value="46">46层</option>
-    <option value="47">47层</option>
-    <option value="48">48层</option>
-    <option value="49">49层</option>
-    <option value="50">50层</option>
-    <option value="51">51层</option>
-    <option value="52">52层</option>
-    <option value="53">53层</option>
-    <option value="54">54层</option>
-    <option value="55">55层</option>
-    <option value="56">56层</option>
-    <option value="57">57层</option>
-    <option value="58">58层</option>
-    <option value="59">59层</option>
-    <option value="60">60层</option>
-    <option value="61">61层</option>
-    <option value="62">62层</option>
-    <option value="63">63层</option>
-    <option value="64">64层</option>
-    <option value="65">65层</option>
-    <option value="66">66层</option>
-    <option value="67">67层</option>
-    <option value="68">68层</option>
-    <option value="69">69层</option>
-    <option value="70">70层</option>
-    <option value="71">71层</option>
-    <option value="72">72层</option>
-    <option value="73">73层</option>
-    <option value="74">74层</option>
-    <option value="75">75层</option>
-    <option value="76">76层</option>
-    <option value="77">77层</option>
-    <option value="78">78层</option>
-    <option value="79">79层</option>
-    <option value="80">80层</option>
-    <option value="81">81层</option>
-    <option value="82">82层</option>
-    <option value="83">83层</option>
-    <option value="84">84层</option>
-    <option value="85">85层</option>
-    <option value="86">86层</option>
-    <option value="87">87层</option>
-    <option value="88">88层</option>
-    <option value="89">89层</option>
-    <option value="90">90层</option>
-    <option value="91">91层</option>
-    <option value="92">92层</option>
-    <option value="93">93层</option>
-    <option value="94">94层</option>
-    <option value="95">95层</option>
-    <option value="96">96层</option>
-    <option value="97">97层</option>
-    <option value="98">98层</option>
-    <option value="99">99层</option>
-</select></p>
-<table>
-    <tr>
-        <th>功力</th>
-        <td class="des">1层</td>
-    </tr>
-    <tr>
-        <th>内功点数</th>
-        <td>7（初学乍练）</td>
-    </tr>
-    <tr>
-        <th>臂力</th>
-        <td>+13</td>
-    </tr>
-    <tr>
-        <th>身法</th>
-        <td>+3</td>
-    </tr>
-    <tr>
-        <th>内息</th>
-        <td>+2</td>
-    </tr>
-    <tr>
-        <th>罡气</th>
-        <td>+2</td>
-    </tr>
-    <tr>
-        <th>体魄</th>
-        <td>+11</td>
-    </tr>
-    <tr>
-        <th colspan="2" style="color:#FFFF00;">内功发挥装备实力上限</th>
-    </tr>
-    <tr style="color:#FFFF00;">
-        <th>臂力</th>
-        <td>+19</td>
-    </tr>
-    <tr style="color:#FFFF00;">
-        <th>身法</th>
-        <td>+4</td>
-    </tr>
-    <tr style="color:#FFFF00;">
-        <th>内息</th>
-        <td>+3</td>
-    </tr>
-    <tr style="color:#FFFF00;">
-        <th>罡气</th>
-        <td>+3</td>
-    </tr>
-    <tr style="color:#FFFF00;">
-        <th>体魄</th>
-        <td>+16</td>
-    </tr>
-    <tr>
-        <th>运行激活</th>
-        <td>气血上限+380<br>内力上限+105<br>招架耐力上限+140<br>内功防御+25<br><font color="#eb6077">阳、刚</font>属性招式造成的伤害提高20%<br/><font
-                color="#eb6077">太极</font>属性招式造成的伤害提高16%
-        </td>
-    </tr>
-    <tr>
-        <th></th>
-        <td>内功突破还需<font color="#00FF66">8050</font>修为（累计消耗<font color="#00FF66">0</font>修为）</td>
-    </tr>
-</table>
-<footer>Copyleft 2018 Maintained by <a
-        href="http://tieba.baidu.com/home/main?un=%E6%96%B0%E6%8E%A5%E5%8F%A3%E8%BF%90%E5%8A%A8%E8%A1%AB&amp;fr=pb&amp;ie=utf-8">@新接口运动衫</a>
-</footer>
+
+<body class="wrap">
+<header style="padding-top: 24px;">
+    <div class="header-button" id="closeWindow"><i class="iconfont icon-back"></i>??</div>
+    <div class="header-title">
+        <input type="text" id="level" value="????" readonly="">
+    </div>
+    <div class="header-button"></div>
+</header>
+<section class="flex">
+    <div id="titleContainer">
+        <img src="http://9yin.azurewebsites.net//images/icon/neigong/ng_gb_003.png" id="icon" align="middle"
+             style="display: inline-block;"><span id="title"><h1 style="color:#ba9772">????</h1></span>
+    </div>
+    <div id="description">????????????????????????????????????????????????</div>
+    <div id="base">
+        <table>
+            <tbody>
+            <tr>
+                <th>??</th>
+                <td>??</td>
+            </tr>
+            <tr>
+                <th>??</th>
+                <td>??</td>
+            </tr>
+            <tr>
+                <th>????</th>
+                <td>110</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="detail">
+        <table>
+            <tbody>
+            <tr>
+                <th>??</th>
+                <td class="des">42?</td>
+            </tr>
+            <tr>
+                <th>????</th>
+                <td>73??????</td>
+            </tr>
+            <tr>
+                <th>??</th>
+                <td>+180</td>
+            </tr>
+            <tr>
+                <th>??</th>
+                <td>+36</td>
+            </tr>
+            <tr>
+                <th>??</th>
+                <td>+36</td>
+            </tr>
+            <tr>
+                <th>??</th>
+                <td>+36</td>
+            </tr>
+            <tr>
+                <th>??</th>
+                <td>+72</td>
+            </tr>
+            <tr>
+                <th colspan="2" style="color:#FFFF00;">??????????</th>
+            </tr>
+            <tr style="color:#FFFF00;">
+                <th>??</th>
+                <td>+270</td>
+            </tr>
+            <tr style="color:#FFFF00;">
+                <th>??</th>
+                <td>+54</td>
+            </tr>
+            <tr style="color:#FFFF00;">
+                <th>??</th>
+                <td>+54</td>
+            </tr>
+            <tr style="color:#FFFF00;">
+                <th>??</th>
+                <td>+54</td>
+            </tr>
+            <tr style="color:#FFFF00;">
+                <th>??</th>
+                <td>+108</td>
+            </tr>
+            <tr>
+                <th>????</th>
+                <td>????+4770<br>????+1050<br>??????+2130<br>????+105<br><font
+                        color="#eb6077">???</font>???????????20%<br><font color="#eb6077">??</font>???????????16%
+                </td>
+            </tr>
+            <tr>
+                <th>????</th>
+                <td class="des"><font color="#FF3030">??</font>?????????????<font color="#FF3030">??</font>??10%?????????983??<br><font
+                        color="#FF3030">??</font>???????????7???????????????????????
+                </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>??????<font color="#00FF66">0</font>???????<font color="#00FF66">14994150</font>???</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+<div id="hide" hidden=""></div>
+
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    let selectData = {};
+
+    function numberToChinese(section) {
+        const chnNumChar = ["?", "?", "?", "?", "?", "?", "?", "?", "?", "?"];
+        const chnUnitSection = ["", "?", "?", "??", "??"];
+        const chnUnitChar = ["", "?", "?", "?"];
+        var strIns = '',
+            chnStr = '';
+        var unitPos = 0;
+        var zero = true;
+        while (section > 0) {
+            var v = section % 10;
+            if (v === 0) {
+                if (!zero) {
+                    zero = true;
+                    chnStr = chnNumChar[v] + chnStr;
+                }
+            } else {
+                zero = false;
+                strIns = chnNumChar[v];
+                strIns += chnUnitChar[unitPos];
+                chnStr = strIns + chnStr;
+            }
+            unitPos++;
+            section = Math.floor(section / 10);
+        }
+        return chnStr;
+    }
+
+    function initView() {
+        let header = $api.dom('header');
+        let headerH = $api.fixStatusBar(header);
+    }
+
+    function initData(level) {
+        let url = api.pageParam.url.replace(/\/\d+$/, '/' + (level || 1));
+        api.ajax({
+            url: url,
+            dataType: 'text'
+        }, function (ret, err) {
+            if (ret) {
+                let $hide = $('#hide').empty();
+                $hide.html(ret);
+                let $h1 = $hide.find('h1');
+                $('#title').empty().html($h1.prop('outerHTML'));
+                let $img = $h1.next();
+                $('#icon').hide().attr('src', 'http://9yin.azurewebsites.net/' + $img.attr('src')).show();
+                let $p = $img.next();
+                $('#description').empty().text($p.text());
+                let $base = $p.next();
+                $('#base').empty().html($base.prop('outerHTML'));
+                let $select = $base.next().children('select');
+                selectData = $.extend({}, {
+                    actives: [],
+                    datas: []
+                });
+                $select.find('option').each(function (index) {
+                    let $option = $(this);
+                    selectData.datas.push({
+                        name: '??' + numberToChinese(parseInt($option.text())) + '?',
+                        value: $option.attr('value')
+                    });
+                    if (this.hasAttribute('selected')) {
+                        selectData.actives = [index];
+                    }
+                });
+
+                let $detail = $select.parent().next();
+                $('#detail').empty().html($detail.prop('outerHTML'));
+                $hide.empty();
+                console.log($('html').html());
+            }
+        });
+    }
+
+    function showSelect() {
+        let UIActionSelector = api.require('UIActionSelector');
+        UIActionSelector.open({
+            datas: selectData.datas,
+            layout: {
+                row: 5,
+                col: 1,
+                height: 30,
+                size: 12,
+                sizeActive: 14,
+                rowSpacing: 5,
+                colSpacing: 10,
+                maskBg: 'rgba(0,0,0,0.2)',
+                bg: '#fff',
+                color: '#888',
+                colorActive: '#f00',
+                colorSelected: '#f00'
+            },
+            animation: true,
+            cancel: {
+                text: '??',
+                size: 12,
+                w: 90,
+                h: 35,
+                bg: '#fff',
+                bgActive: '#ccc',
+                color: '#888',
+                colorActive: '#fff'
+            },
+            ok: {
+                text: '??',
+                size: 12,
+                w: 90,
+                h: 35,
+                bg: '#fff',
+                bgActive: '#ccc',
+                color: '#888',
+                colorActive: '#fff'
+            },
+            title: {
+                text: '????',
+                size: 12,
+                h: 44,
+                bg: '#eee',
+                color: '#888'
+            },
+            fixedOn: api.frameName,
+            actives: selectData.actives
+        }, function (ret, err) {
+            if (ret) {
+                if (ret.eventType === 'ok') {
+                    let levelValue = ret.selectedInfo[0].value;
+                    $('#level').val(ret.level1);
+                    initData(levelValue);
+                }
+            }
+        });
+    }
+
+    function initEvent() {
+        $api.addEvt($api.byId('closeWindow'), 'click', function () {
+            api.closeWin();
+        });
+        $api.addEvt($api.byId('level'), 'click', function () {
+            showSelect();
+        });
+    }
+
+    $(function () {
+        apiready = function () {
+            initView();
+            initEvent();
+            initData();
+        };
+    });
+</script>
+
+
 </body>
 </html>
