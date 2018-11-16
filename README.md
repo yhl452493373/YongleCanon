@@ -1,5 +1,6 @@
 # YongleCanon
 九阴真经——永乐大典的手机版手机版，数据从 http://9yin.azurewebsites.net 上面扒的
+# 1.0.4下载地址http://downloadpkg.apicloud.com/app/download?path=http://A6097622387850.qiniucdn.apicloud-system.com/e39f3b0a4829e928bc0a61ce2df64c89_d
 # 需要配合APICloud使用
 ------
 用APICloud创建好项目后，直接把这里面的文件copy过去，把config.xml里面的<widget id="A6097622387850">里面的id属性改成你新建的项目的id，然后就可以用APICloud编译处理了。
