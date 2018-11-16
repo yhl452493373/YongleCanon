@@ -89,6 +89,10 @@
             color: #fff;
         }
 
+        #titleContainer {
+            text-align: center;
+        }
+
         #title h1 {
             text-align: center;
             font-size: 20px;
@@ -97,13 +101,47 @@
             line-height: 50px;
         }
 
-        #description {
+        #title {
+            vertical-align: middle;
+        }
+
+        #icon {
+            width: 50px;
+            height: 50px;
+            display: none;
+            border-radius: 2px;
+            vertical-align: middle;
+        }
+
+        #base {
             margin-top: 10px;
-            word-break: break-all;
         }
 
         #detail {
             margin-top: 10px;
+        }
+
+        #base table {
+            table-layout: fixed;
+            width: 100%;
+            border-top: 1px solid #eee;
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+        }
+
+        #base table tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        #base table th {
+            width: 70px;
+            border-right: 1px solid #eee;
+            padding: 5px;
+        }
+
+        #base table td {
+            width: auto;
+            padding: 5px;
         }
 
         #detail table {
@@ -122,13 +160,6 @@
             width: 70px;
             border-right: 1px solid #eee;
             padding: 5px;
-            text-align: center;
-        }
-
-        #detail table th img {
-            width: 50px;
-            height: 50px;
-            border-radius: 2px;
         }
 
         #detail table td {
@@ -184,15 +215,12 @@
     <div class="header-button"></div>
 </header>
 <section class="flex">
-    <div id="title"></div>
-    <div id="description"></div>
+    <div id="titleContainer">
+        <img src="" id="icon" align="middle"><span id="title"></span>
+    </div>
     <script id="const"></script>
     <div id="base"></div>
-    <div id="detail">
-        <table>
-
-        </table>
-    </div>
+    <div id="detail"></div>
     <div id="props">
         <form name="props" onchange="calc();calc_damage()">
             <h3>属性计算</h3>
@@ -209,6 +237,25 @@
             <font class="pur">兵　　录：</font>
             <input type="number" value="0" min="0" max="454" id="binglu" name="binglu" readonly>
         </form>
+        <form name="props_damage" onchange="calc_damage()">
+            <h3>伤害计算(alpha)</h3>
+            <font>武器招式威力加成：</font>
+            <input type="text" value="0" min="0" max="10" id="skW" name="skW" readonly><span>成</span><br>
+            <font>批注招式威力加成：</font>
+            <input type="text" value="0" min="0" max="1" id="skN" name="skN" readonly><span>成</span><br>
+            <font>套路招式伤害提升：</font>
+            <input type="number" min="0" step="1" name="skS">%<br>
+            <font>宝物招式每击伤害：</font>
+            <input type="number" min="0" step="1" name="skT"><br>
+            <font>内功属性伤害提升：</font>
+            <input type="text" value="0" min="0" max="20" id="ngP" name="ngP" readonly><span>%</span><br>
+            <font>内功特效伤害提升：</font>
+            <input type="number" min="0" step="1" name="bfN">%<br>
+            <font>　　暴击伤害提升：</font>
+            <input type="number" min="0" step="1" name="pVDA">%<br>
+            <font>　　　　每击伤害：</font><span id="damage_min">4</span> ~ <span id="damage_max">4</span><br>
+            <font>　暴击时每击伤害：</font><span id="damage_va_min">4</span> ~ <span id="damage_va_max">4</span>
+        </form>
     </div>
 </section>
 <div id="hide" hidden></div>
@@ -217,6 +264,7 @@
 <script type="text/javascript" src="../script/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../script/calc-scripts.js"></script>
 <script type="text/javascript" src="../script/storage_props.js"></script>
+<script type="text/javascript" src="../script/storage_props_damage.js"></script>
 <script type="text/javascript">
     let selectData = {};
 
@@ -253,7 +301,7 @@
     }
 
     function initData(level) {
-        let url = api.pageParam.url.replace(/\/\d+$/, '/' + (level || 1));
+        let url = api.pageParam.url.replace(/\/\d+\??$/, '/' + (level || 1));
         api.ajax({
             url: url,
             dataType: 'text'
@@ -264,11 +312,13 @@
                 $hide.html(ret);
                 let $h1 = $hide.find('h1');
                 $('#title').empty().html($h1.prop('outerHTML'));
-                let $p = $h1.next();
-                $('#description').empty().text($p.text());
-                let $const = $p.next();
+                let $const = $h1.next();
                 $('#const').html($const.html());
-                let $select = $const.next().children('select');
+                let $img = $const.next();
+                $('#icon').hide().attr('src', 'http://9yin.azurewebsites.net/' + $img.attr('src')).show();
+                let $base = $img.next();
+                $('#base').empty().html($base.prop('outerHTML'));
+                let $select = $base.next().children('select');
                 selectData = $.extend({}, {
                     actives: [],
                     datas: []
@@ -285,11 +335,7 @@
                 });
 
                 let $detail = $select.parent().next();
-                let trStringArray = [];
-                $detail.find('tr').each(function () {
-                    trStringArray.push(assemblyTr($(this)));
-                });
-                $('#detail table').empty().html(trStringArray.join(''));
+                $('#detail').empty().html($detail.prop('outerHTML'));
                 $hide.empty();
                 calc();
                 calc_damage();
@@ -298,7 +344,7 @@
         });
     }
 
-    function showLevelSelect() {
+    function showSelect() {
         let UIActionSelector = api.require('UIActionSelector');
         UIActionSelector.open({
             datas: selectData.datas,
@@ -355,48 +401,6 @@
                 }
             }
         });
-    }
-
-    function assemblyTr($tr) {
-        let $children = $tr.children('th,td');
-        return '<tr>' +
-            '                <th rowspan="2" class="single-skill-detail" data-url="http://9yin.azurewebsites.net' + $children.eq(0).children('form').attr('action') + '">' +
-            '                    <img src="http://9yin.azurewebsites.net' + $children.eq(1).children('img').attr('src') + '">' +
-            '                    <div>' + $children.eq(0).children('font').prop('outerHTML') + '</div>' +
-            '                </th>' +
-            '                <td>' +
-            '                    <table>' +
-            '                        <tr>' +
-            '                            <td width=70>' + ($children.eq(2).text().trim().length === 0 ? '未知' : $children.eq(2).text()) + '属性' + '</td>' +
-            '                            <td>' + $children.eq(3).text() + '招</td>' +
-            '                            <td>' + $children.eq(4).text() + '</td>' +
-            '                        </tr>' +
-            '                        <tr>' +
-            '                            <td>' + $children.eq(5).html() + '</td>' +
-            '                            <td>' + $children.eq(6).html() + '距离</td>' +
-            '                            <td>' + $children.eq(7).html() + '回气</td>' +
-            '                        </tr>' +
-            '                        <tr>' +
-            '                            <td>' +
-            ($children.eq(8).text().trim().length === 0 ?
-                '无' : $children.eq(8).html().indexOf('(怒)') == -1 ?
-                    $children.eq(8).html() + '蓝耗' : $children.eq(8).html().replace('(怒)', '') + '怒气') +
-            '                            </td>' +
-            '                            <td colspan="2">' + $children.eq(10).text() + '</td>' +
-            '                        </tr>' +
-            '                    </table>' +
-            '                </td>' +
-            '               ' + function () {
-                let tempScript = [];
-                $tr.children('script').each(function () {
-                    tempScript.push(this.outerHTML);
-                });
-                return tempScript.join('');
-            }() +
-            '            </tr>' +
-            '            <tr>' +
-            '                <td>' + $children.eq(9).html() + '</td>' +
-            '            </tr>';
     }
 
     function showBingluLevelSelect() {
@@ -514,15 +518,232 @@
         });
     }
 
-    function showSingleSkillDetail(name, url) {
-        api.openWin({
-            name: 'singleSkillDetail',
-            url: './singleSkillDetail.html',
-            pageParam: {
-                url: url,
-                name: name
+    function showWuqiWeiliSelect() {
+        let UIActionSelector = api.require('UIActionSelector');
+        const datas = [{
+            name: '0成',
+            value: 0
+        }, {
+            name: '1成',
+            value: 1
+        }, {
+            name: '2成',
+            value: 2
+        }, {
+            name: '3成',
+            value: 3
+        }, {
+            name: '10成',
+            value: 10
+        }];
+        let actives = [];
+        datas.forEach(function (item, index) {
+            // noinspection EqualityComparisonWithCoercionJS
+            if (item.value == $('#skW').val()) {
+                actives.push(index);
             }
-        })
+        });
+        UIActionSelector.open({
+            datas: datas,
+            layout: {
+                row: 7,
+                col: 1,
+                height: 30,
+                size: 12,
+                sizeActive: 14,
+                rowSpacing: 5,
+                colSpacing: 10,
+                maskBg: 'rgba(0,0,0,0.2)',
+                bg: '#fff',
+                color: '#999',
+                colorActive: '#f00',
+                colorSelected: '#f00'
+            },
+            animation: true,
+            cancel: {
+                text: '取消',
+                size: 12,
+                w: 60,
+                h: 30,
+                bg: 'rgba(0,0,0,0)',
+                bgActive: '#ccc',
+                color: '#fff',
+                colorActive: '#fff'
+            },
+            ok: {
+                text: '确定',
+                size: 12,
+                w: 60,
+                h: 30,
+                bg: 'rgba(0,0,0,0)',
+                bgActive: '#ccc',
+                color: '#fff',
+                colorActive: '#fff'
+            },
+            title: {
+                text: '武器招式威力加成',
+                size: 14,
+                h: 44,
+                bg: 'rgba(0,0,0,0.8)',
+                color: '#fff'
+            },
+            fixedOn: api.frameName,
+            actives: actives
+        }, function (ret, err) {
+            if (ret) {
+                if (ret.eventType === 'ok') {
+                    $('#skW').val(ret.selectedInfo[0].value);
+                    calc_damage();
+                }
+            }
+        });
+    }
+
+    function showPizhuWeiliSelect() {
+        let UIActionSelector = api.require('UIActionSelector');
+        const datas = [{
+            name: '0成',
+            value: 0
+        }, {
+            name: '1成',
+            value: 1
+        }];
+        let actives = [];
+        datas.forEach(function (item, index) {
+            // noinspection EqualityComparisonWithCoercionJS
+            if (item.value == $('#skN').val()) {
+                actives.push(index);
+            }
+        });
+        UIActionSelector.open({
+            datas: datas,
+            layout: {
+                row: 7,
+                col: 1,
+                height: 30,
+                size: 12,
+                sizeActive: 14,
+                rowSpacing: 5,
+                colSpacing: 10,
+                maskBg: 'rgba(0,0,0,0.2)',
+                bg: '#fff',
+                color: '#999',
+                colorActive: '#f00',
+                colorSelected: '#f00'
+            },
+            animation: true,
+            cancel: {
+                text: '取消',
+                size: 12,
+                w: 60,
+                h: 30,
+                bg: 'rgba(0,0,0,0)',
+                bgActive: '#ccc',
+                color: '#fff',
+                colorActive: '#fff'
+            },
+            ok: {
+                text: '确定',
+                size: 12,
+                w: 60,
+                h: 30,
+                bg: 'rgba(0,0,0,0)',
+                bgActive: '#ccc',
+                color: '#fff',
+                colorActive: '#fff'
+            },
+            title: {
+                text: '批注招式威力加成',
+                size: 14,
+                h: 44,
+                bg: 'rgba(0,0,0,0.8)',
+                color: '#fff'
+            },
+            fixedOn: api.frameName,
+            actives: actives
+        }, function (ret, err) {
+            if (ret) {
+                if (ret.eventType === 'ok') {
+                    $('#skN').val(ret.selectedInfo[0].value);
+                    calc_damage();
+                }
+            }
+        });
+    }
+
+    function showNeigongShuxingSelect() {
+        let UIActionSelector = api.require('UIActionSelector');
+        const datas = [{
+            name: '0%',
+            value: 0
+        }, {
+            name: '16%',
+            value: 16
+        }, {
+            name: '20%',
+            value: 20
+        }];
+        let actives = [];
+        datas.forEach(function (item, index) {
+            // noinspection EqualityComparisonWithCoercionJS
+            if (item.value == $('#skN').val()) {
+                actives.push(index);
+            }
+        });
+        UIActionSelector.open({
+            datas: datas,
+            layout: {
+                row: 7,
+                col: 1,
+                height: 30,
+                size: 12,
+                sizeActive: 14,
+                rowSpacing: 5,
+                colSpacing: 10,
+                maskBg: 'rgba(0,0,0,0.2)',
+                bg: '#fff',
+                color: '#999',
+                colorActive: '#f00',
+                colorSelected: '#f00'
+            },
+            animation: true,
+            cancel: {
+                text: '取消',
+                size: 12,
+                w: 60,
+                h: 30,
+                bg: 'rgba(0,0,0,0)',
+                bgActive: '#ccc',
+                color: '#fff',
+                colorActive: '#fff'
+            },
+            ok: {
+                text: '确定',
+                size: 12,
+                w: 60,
+                h: 30,
+                bg: 'rgba(0,0,0,0)',
+                bgActive: '#ccc',
+                color: '#fff',
+                colorActive: '#fff'
+            },
+            title: {
+                text: '内功属性伤害提升',
+                size: 14,
+                h: 44,
+                bg: 'rgba(0,0,0,0.8)',
+                color: '#fff'
+            },
+            fixedOn: api.frameName,
+            actives: actives
+        }, function (ret, err) {
+            if (ret) {
+                if (ret.eventType === 'ok') {
+                    $('#ngP').val(ret.selectedInfo[0].value);
+                    calc_damage();
+                }
+            }
+        });
     }
 
     function initEvent() {
@@ -530,13 +751,19 @@
             api.closeWin();
         });
         $api.addEvt($api.byId('level'), 'click', function () {
-            showLevelSelect();
+            showSelect();
         });
         $api.addEvt($api.byId('binglu'), 'click', function () {
             showBingluLevelSelect();
         });
-        $(document).on('click.single-skill-detail', 'th.single-skill-detail', function () {
-            showSingleSkillDetail($(this).children('div').text(), this.getAttribute('data-url'));
+        $api.addEvt($api.byId('skW'), 'click', function () {
+            showWuqiWeiliSelect();
+        });
+        $api.addEvt($api.byId('skN'), 'click', function () {
+            showPizhuWeiliSelect();
+        });
+        $api.addEvt($api.byId('ngP'), 'click', function () {
+            showNeigongShuxingSelect();
         });
     }
 
