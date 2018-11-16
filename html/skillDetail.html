@@ -380,7 +380,7 @@
             '                            <td>' +
             ($children.eq(8).text().trim().length === 0 ?
                 '无' : $children.eq(8).html().indexOf('(怒)') == -1 ?
-                    $children.eq(8).html() + '蓝耗' : $children.eq(8).html().replace('(怒)', '') + '怒气') +
+                    $children.eq(8).html() + '蓝耗' : $children.eq(8).find('br').remove().end().html().replace('(怒)', '') + '怒气') +
             '                            </td>' +
             '                            <td colspan="2">' + $children.eq(10).text() + '</td>' +
             '                        </tr>' +
