@@ -15,6 +15,7 @@
 
         #placeholder {
             height: 32px;
+            display: none;
         }
 
         .scale-1px {
@@ -53,7 +54,7 @@
                 x: 0,
                 y: 32,
                 w: api.frameWidth,
-                h: api.frameHeight
+                h: api.frameHeight - 32
             },
             styles: {
                 bg: 'rgba(0,0,0,0)',
@@ -155,22 +156,29 @@
                     });
                 });
             }
+            if (ret.eventType === 'show') {
+                $('#placeholder').show();
+            }
         });
     }
 
     function searchData(text, datas) {
         let searchResult = [];
-        datas.forEach(function(data, index) {
+        datas.forEach(function (data, index) {
             let tempDatas = {
                 title: null,
                 cells: []
             };
-            data.cells.forEach(function(cell) {
-                if (cell.full.indexOf(text) !== -1) {
-                    tempDatas.title = data.title;
-                    tempDatas.cells.push($.extend({}, cell));
-                }
-            });
+            if(data.title.indexOf(text) !== -1){
+                tempDatas = data;
+            }else{
+                data.cells.forEach(function (cell) {
+                    if (cell.full.indexOf(text) !== -1) {
+                        tempDatas.title = data.title;
+                        tempDatas.cells.push(cell);
+                    }
+                });
+            }
             if (tempDatas.title != null)
                 searchResult.push(tempDatas);
         });
