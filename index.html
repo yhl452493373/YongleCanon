@@ -60,20 +60,20 @@
 <script type="text/javascript" src="./script/api.js"></script>
 <script>
     function initView() {
-        let header = $api.dom('header');
-        let headerH = $api.fixStatusBar(header);
+        var header = $api.dom('header');
+        var headerH = $api.fixStatusBar(header);
         initNavBar(headerH);
     }
 
     function initNavBar(headerH) {
-        const navSelectorHeight = 40;
-        const navSelectorId = 'navSelector';
+        var navSelectorHeight = 40;
+        var navSelectorId = 'navSelector';
 
-        let NVNavigationBar = api.require('NVNavigationBar');
+        var NVNavigationBar = api.require('NVNavigationBar');
 
-        let initNavSelector = function() {
-            const fontSize = 16;
-            const padding = 10;
+        var initNavSelector = function() {
+            var fontSize = 16;
+            var padding = 10;
             NVNavigationBar.open({
                 rect: {
                     x: 0,
@@ -124,7 +124,7 @@
             });
         };
 
-        let initNavContent = function() {
+        var initNavContent = function() {
             api.openFrameGroup({
                 name: 'navContent',
                 background: 'rgba(0,0,0,0)',

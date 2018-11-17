@@ -3,12 +3,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport"
-          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title>title</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
-    <link rel="stylesheet" type="text/css" href="../css/iconfont/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/iconfont/iconfont.css" />
     <style type="text/css">
         html,
         body {
@@ -207,58 +206,58 @@
 </head>
 
 <body class="wrap">
-<header>
-    <div class="header-button" id="closeWindow"><i class="iconfont icon-back"></i>返回</div>
-    <div class="header-title">
-        <input type="text" id="level" value="功力一层" readonly placeholder="内功层数">
-    </div>
-    <div class="header-button"></div>
-</header>
-<section class="flex">
-    <div id="titleContainer">
-        <img src="" id="icon" align="middle"><span id="title"></span>
-    </div>
-    <script id="const"></script>
-    <div id="base"></div>
-    <div id="detail"></div>
-    <div id="props">
-        <form name="props" onchange="calc();calc_damage()">
-            <h3>属性计算</h3>
-            <font class="yel">武器伤害：</font>
-            <input type="number" min="0" step="1" name="minM"> ~ <input type="number" min="0" step="1" name="maxM"><br>
-            <font class="yel">射击伤害：</font>
-            <input type="number" min="0" step="1" name="minS"> ~ <input type="number" min="0" step="1" name="maxS"><br>
-            <font class="red">近身威力：</font>
-            <input type="number" min="0" step="1" name="meP"><br>
-            <font class="blu">内功威力：</font>
-            <input type="number" min="0" step="1" name="maP"><br>
-            <font class="gre">远程威力：</font>
-            <input type="number" min="0" step="1" name="shP"><br>
-            <font class="pur">兵　　录：</font>
-            <input type="number" value="0" min="0" max="454" id="binglu" name="binglu" readonly>
-        </form>
-        <form name="props_damage" onchange="calc_damage()" style="margin-top: 10px">
-            <h3>伤害计算(alpha)</h3>
-            <font>武器招式威力加成：</font>
-            <input type="text" value="0" min="0" max="10" id="skW" name="skW" readonly><span>成</span><br>
-            <font>批注招式威力加成：</font>
-            <input type="text" value="0" min="0" max="1" id="skN" name="skN" readonly><span>成</span><br>
-            <font>套路招式伤害提升：</font>
-            <input type="number" min="0" step="1" name="skS">%<br>
-            <font>宝物招式每击伤害：</font>
-            <input type="number" min="0" step="1" name="skT"><br>
-            <font>内功属性伤害提升：</font>
-            <input type="text" value="0" min="0" max="20" id="ngP" name="ngP" readonly><span>%</span><br>
-            <font>内功特效伤害提升：</font>
-            <input type="number" min="0" step="1" name="bfN">%<br>
-            <font>　　暴击伤害提升：</font>
-            <input type="number" min="0" step="1" name="pVDA">%<br>
-            <font>　　　　每击伤害：　</font><span id="damage_min">4</span> ~ <span id="damage_max">4</span><br>
-            <font>　暴击时每击伤害：　</font><span id="damage_va_min">4</span> ~ <span id="damage_va_max">4</span>
-        </form>
-    </div>
-</section>
-<div id="hide" hidden></div>
+    <header>
+        <div class="header-button" id="closeWindow"><i class="iconfont icon-back"></i>返回</div>
+        <div class="header-title">
+            <input type="text" id="level" value="功力一层" readonly placeholder="内功层数">
+        </div>
+        <div class="header-button"></div>
+    </header>
+    <section class="flex">
+        <div id="titleContainer">
+            <img src="" id="icon" align="middle"><span id="title"></span>
+        </div>
+        <script id="const"></script>
+        <div id="base"></div>
+        <div id="detail"></div>
+        <div id="props">
+            <form name="props" onchange="calc();calc_damage()">
+                <h3>属性计算</h3>
+                <font class="yel">武器伤害：</font>
+                <input type="number" min="0" step="1" name="minM"> ~ <input type="number" min="0" step="1" name="maxM"><br>
+                <font class="yel">射击伤害：</font>
+                <input type="number" min="0" step="1" name="minS"> ~ <input type="number" min="0" step="1" name="maxS"><br>
+                <font class="red">近身威力：</font>
+                <input type="number" min="0" step="1" name="meP"><br>
+                <font class="blu">内功威力：</font>
+                <input type="number" min="0" step="1" name="maP"><br>
+                <font class="gre">远程威力：</font>
+                <input type="number" min="0" step="1" name="shP"><br>
+                <font class="pur">兵　　录：</font>
+                <input type="number" value="0" min="0" max="454" id="binglu" name="binglu" readonly>
+            </form>
+            <form name="props_damage" onchange="calc_damage()" style="margin-top: 10px">
+                <h3>伤害计算(alpha)</h3>
+                <font>武器招式威力加成：</font>
+                <input type="text" value="0" min="0" max="10" id="skW" name="skW" readonly><span>成</span><br>
+                <font>批注招式威力加成：</font>
+                <input type="text" value="0" min="0" max="1" id="skN" name="skN" readonly><span>成</span><br>
+                <font>套路招式伤害提升：</font>
+                <input type="number" min="0" step="1" name="skS">%<br>
+                <font>宝物招式每击伤害：</font>
+                <input type="number" min="0" step="1" name="skT"><br>
+                <font>内功属性伤害提升：</font>
+                <input type="text" value="0" min="0" max="20" id="ngP" name="ngP" readonly><span>%</span><br>
+                <font>内功特效伤害提升：</font>
+                <input type="number" min="0" step="1" name="bfN">%<br>
+                <font>　　暴击伤害提升：</font>
+                <input type="number" min="0" step="1" name="pVDA">%<br>
+                <font>　　　　每击伤害：　</font><span id="damage_min">4</span> ~ <span id="damage_max">4</span><br>
+                <font>　暴击时每击伤害：　</font><span id="damage_va_min">4</span> ~ <span id="damage_va_max">4</span>
+            </form>
+        </div>
+    </section>
+    <div id="hide" hidden></div>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/jquery-3.3.1.min.js"></script>
@@ -266,18 +265,18 @@
 <script type="text/javascript" src="../script/storage_props.js"></script>
 <script type="text/javascript" src="../script/storage_props_damage.js"></script>
 <script type="text/javascript">
-    let selectData = {};
+    var selectData = {};
 
     function numberToChinese(section) {
-        const chnNumChar = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
-        const chnUnitSection = ["", "万", "亿", "万亿", "亿亿"];
-        const chnUnitChar = ["", "十", "百", "千"];
-        let strIns = '',
+        var chnNumChar = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+        var chnUnitSection = ["", "万", "亿", "万亿", "亿亿"];
+        var chnUnitChar = ["", "十", "百", "千"];
+        var strIns = '',
             chnStr = '';
-        let unitPos = 0;
-        let zero = true;
+        var unitPos = 0;
+        var zero = true;
         while (section > 0) {
-            let v = section % 10;
+            var v = section % 10;
             if (v === 0) {
                 if (!zero) {
                     zero = true;
@@ -296,35 +295,35 @@
     }
 
     function initView() {
-        let header = $api.dom('header');
-        let headerH = $api.fixStatusBar(header);
+        var header = $api.dom('header');
+        var headerH = $api.fixStatusBar(header);
     }
 
     function initData(level) {
-        let url = api.pageParam.url.replace(/\/\d+\??$/, '/' + (level || 1));
+        var url = api.pageParam.url.replace(/\/\d+\??$/, '/' + (level || 1));
         api.ajax({
             url: url,
             dataType: 'text'
-        }, function (ret, err) {
+        }, function(ret, err) {
             if (ret) {
                 $('#props').hide();
-                let $hide = $('#hide').empty();
+                var $hide = $('#hide').empty();
                 $hide.html(ret);
-                let $h1 = $hide.find('h1');
+                var $h1 = $hide.find('h1');
                 $('#title').empty().html($h1.prop('outerHTML'));
-                let $const = $h1.next();
+                var $const = $h1.next();
                 $('#const').html($const.html());
-                let $img = $const.next();
+                var $img = $const.next();
                 $('#icon').hide().attr('src', 'http://9yin.azurewebsites.net/' + $img.attr('src')).show();
-                let $base = $img.next();
+                var $base = $img.next();
                 $('#base').empty().html($base.prop('outerHTML'));
-                let $select = $base.next().children('select');
+                var $select = $base.next().children('select');
                 selectData = $.extend({}, {
                     actives: [],
                     datas: []
                 });
-                $select.find('option').each(function (index) {
-                    let $option = $(this);
+                $select.find('option').each(function(index) {
+                    var $option = $(this);
                     selectData.datas.push({
                         name: '功力' + numberToChinese(parseInt($option.text())) + '层',
                         value: $option.attr('value')
@@ -334,7 +333,7 @@
                     }
                 });
 
-                let $detail = $select.parent().next();
+                var $detail = $select.parent().next();
                 $('#detail').empty().html($detail.prop('outerHTML'));
                 $hide.empty();
                 calc();
@@ -345,7 +344,7 @@
     }
 
     function showSelect() {
-        let UIActionSelector = api.require('UIActionSelector');
+        var UIActionSelector = api.require('UIActionSelector');
         UIActionSelector.open({
             datas: selectData.datas,
             layout: {
@@ -392,10 +391,10 @@
             },
             fixedOn: api.frameName,
             actives: selectData.actives
-        }, function (ret, err) {
+        }, function(ret, err) {
             if (ret) {
                 if (ret.eventType === 'ok') {
-                    let levelValue = ret.selectedInfo[0].value;
+                    var levelValue = ret.selectedInfo[0].value;
                     $('#level').val(ret.level1);
                     initData(levelValue);
                 }
@@ -404,8 +403,8 @@
     }
 
     function showBingluLevelSelect() {
-        let UIActionSelector = api.require('UIActionSelector');
-        const datas = [{
+        var UIActionSelector = api.require('UIActionSelector');
+        var datas = [{
             name: '0',
             value: 0
         }, {
@@ -454,13 +453,15 @@
             name: '454',
             value: 454
         }];
-        let actives = [];
-        datas.forEach(function (item, index) {
+        var actives = [];
+        for (var i = 0; i < datas.length; i++) {
+            var item = datas[i],
+                index = i;
             // noinspection EqualityComparisonWithCoercionJS
             if (item.value == $('#binglu').val()) {
                 actives.push(index);
             }
-        });
+        }
         UIActionSelector.open({
             datas: datas,
             layout: {
@@ -507,7 +508,7 @@
             },
             fixedOn: api.frameName,
             actives: actives
-        }, function (ret, err) {
+        }, function(ret, err) {
             if (ret) {
                 if (ret.eventType === 'ok') {
                     $('#binglu').val(ret.level1);
@@ -519,8 +520,8 @@
     }
 
     function showWuqiWeiliSelect() {
-        let UIActionSelector = api.require('UIActionSelector');
-        const datas = [{
+        var UIActionSelector = api.require('UIActionSelector');
+        var datas = [{
             name: '0成',
             value: 0
         }, {
@@ -536,13 +537,15 @@
             name: '10成',
             value: 10
         }];
-        let actives = [];
-        datas.forEach(function (item, index) {
+        var actives = [];
+        for (var i = 0; i < datas.length; i++) {
+            var item = datas[i],
+                index = i;
             // noinspection EqualityComparisonWithCoercionJS
             if (item.value == $('#skW').val()) {
                 actives.push(index);
             }
-        });
+        }
         UIActionSelector.open({
             datas: datas,
             layout: {
@@ -589,7 +592,7 @@
             },
             fixedOn: api.frameName,
             actives: actives
-        }, function (ret, err) {
+        }, function(ret, err) {
             if (ret) {
                 if (ret.eventType === 'ok') {
                     $('#skW').val(ret.selectedInfo[0].value);
@@ -600,21 +603,23 @@
     }
 
     function showPizhuWeiliSelect() {
-        let UIActionSelector = api.require('UIActionSelector');
-        const datas = [{
+        var UIActionSelector = api.require('UIActionSelector');
+        var datas = [{
             name: '0成',
             value: 0
         }, {
             name: '1成',
             value: 1
         }];
-        let actives = [];
-        datas.forEach(function (item, index) {
+        var actives = [];
+        for (var i = 0; i < datas.length; i++) {
+            var item = datas[i],
+                index = i;
             // noinspection EqualityComparisonWithCoercionJS
             if (item.value == $('#skN').val()) {
                 actives.push(index);
             }
-        });
+        }
         UIActionSelector.open({
             datas: datas,
             layout: {
@@ -661,7 +666,7 @@
             },
             fixedOn: api.frameName,
             actives: actives
-        }, function (ret, err) {
+        }, function(ret, err) {
             if (ret) {
                 if (ret.eventType === 'ok') {
                     $('#skN').val(ret.selectedInfo[0].value);
@@ -672,8 +677,8 @@
     }
 
     function showNeigongShuxingSelect() {
-        let UIActionSelector = api.require('UIActionSelector');
-        const datas = [{
+        var UIActionSelector = api.require('UIActionSelector');
+        var datas = [{
             name: '0%',
             value: 0
         }, {
@@ -683,13 +688,15 @@
             name: '20%',
             value: 20
         }];
-        let actives = [];
-        datas.forEach(function (item, index) {
+        var actives = [];
+        for (var i = 0; i < datas.length; i++) {
+            var item = datas[i],
+                index = i;
             // noinspection EqualityComparisonWithCoercionJS
             if (item.value == $('#skN').val()) {
                 actives.push(index);
             }
-        });
+        }
         UIActionSelector.open({
             datas: datas,
             layout: {
@@ -736,7 +743,7 @@
             },
             fixedOn: api.frameName,
             actives: actives
-        }, function (ret, err) {
+        }, function(ret, err) {
             if (ret) {
                 if (ret.eventType === 'ok') {
                     $('#ngP').val(ret.selectedInfo[0].value);
@@ -747,28 +754,28 @@
     }
 
     function initEvent() {
-        $api.addEvt($api.byId('closeWindow'), 'click', function () {
+        $api.addEvt($api.byId('closeWindow'), 'click', function() {
             api.closeWin();
         });
-        $api.addEvt($api.byId('level'), 'click', function () {
+        $api.addEvt($api.byId('level'), 'click', function() {
             showSelect();
         });
-        $api.addEvt($api.byId('binglu'), 'click', function () {
+        $api.addEvt($api.byId('binglu'), 'click', function() {
             showBingluLevelSelect();
         });
-        $api.addEvt($api.byId('skW'), 'click', function () {
+        $api.addEvt($api.byId('skW'), 'click', function() {
             showWuqiWeiliSelect();
         });
-        $api.addEvt($api.byId('skN'), 'click', function () {
+        $api.addEvt($api.byId('skN'), 'click', function() {
             showPizhuWeiliSelect();
         });
-        $api.addEvt($api.byId('ngP'), 'click', function () {
+        $api.addEvt($api.byId('ngP'), 'click', function() {
             showNeigongShuxingSelect();
         });
     }
 
-    $(function () {
-        apiready = function () {
+    $(function() {
+        apiready = function() {
             initView();
             initEvent();
             initData();

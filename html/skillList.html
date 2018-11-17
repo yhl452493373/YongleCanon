@@ -44,8 +44,8 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-    let originalDatas;
-    let groupList;
+    var originalDatas;
+    var groupList;
 
     function initView(datas) {
         groupList = api.require('groupList');
@@ -120,7 +120,7 @@
     }
 
     function initSearchBar() {
-        let UIInput = api.require('UIInput');
+        var UIInput = api.require('UIInput');
         UIInput.open({
             rect: {
                 x: 0,
@@ -144,7 +144,7 @@
         }, function(ret) {
             if (ret.eventType === 'change') {
                 UIInput.value(function(ret) {
-                    let searchdData;
+                    var searchdData;
                     if (ret.msg.trim().length !== 0) {
                         searchdData = searchData(ret.msg, originalDatas);
                     } else {
@@ -162,26 +162,29 @@
     }
 
     function searchData(text, datas) {
-        let searchResult = [];
-        datas.forEach(function (data, index) {
-            let tempDatas = {
-                title: null,
-                cells: []
-            };
-            if(data.title.indexOf(text) !== -1){
-                tempDatas = data;
-            }else{
-                data.cells.forEach(function (cell) {
-                    if (cell.full.indexOf(text) !== -1) {
-                        tempDatas.title = data.title;
-                        tempDatas.cells.push(cell);
-                    }
-                });
-            }
-            if (tempDatas.title != null)
-                searchResult.push(tempDatas);
-        });
-        return searchResult;
+      var searchResult = [];
+      for (var i = 0; i < datas.length; i++) {
+          var data = datas[i],
+              index = 1;
+          var tempDatas = {
+              title: null,
+              cells: []
+          };
+          if (data.title.indexOf(text) !== -1) {
+              tempDatas = data;
+          } else {
+              for (var j = 0; j < data.cells.length; j++) {
+                  var cell = data.cells[j];
+                  if (cell.full.indexOf(text) !== -1) {
+                      tempDatas.title = data.title;
+                      tempDatas.cells.push(cell);
+                  }
+              }
+          }
+          if (tempDatas.title != null)
+              searchResult.push(tempDatas);
+      }
+      return searchResult;
     }
 
     function initData() {
@@ -190,22 +193,22 @@
             dataType: 'text'
         }, function(ret, err) {
             if (ret) {
-                let $html = $(ret);
-                let $details = $html.find('ul');
-                let tempDataArray = [];
+                var $html = $(ret);
+                var $details = $html.find('ul');
+                var tempDataArray = [];
                 $details.each(function() {
-                    let that = this;
-                    let tempData = {
+                    var that = this;
+                    var tempData = {
                         title: $(this).prev().text(),
                         cells: function() {
-                            let tempCellArray = [];
+                            var tempCellArray = [];
                             $(that).find('li > a').each(function() {
-                                let $a = $(this);
-                                let tempCell = {
+                                var $a = $(this);
+                                var tempCell = {
                                     main: $a.text().replace(/[［\[][\u4e00-\u9fa5()]+[］\]]/, ''),
                                     full: $a.text(),
                                     sub: '曾用名:' + function() {
-                                        let tempMatch = $a.text().match(/[［\[]([\u4e00-\u9fa5()]+)[］\]]/);
+                                        var tempMatch = $a.text().match(/[［\[]([\u4e00-\u9fa5()]+)[］\]]/);
                                         if (tempMatch != null)
                                             return tempMatch[1];
                                         return '无';

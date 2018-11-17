@@ -3,12 +3,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport"
-          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title>title</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
-    <link rel="stylesheet" type="text/css" href="../css/iconfont/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/iconfont/iconfont.css" />
     <style type="text/css">
         html,
         body {
@@ -180,39 +179,39 @@
 </head>
 
 <body class="wrap">
-<header>
-    <div class="header-button" id="closeWindow"><i class="iconfont icon-back"></i>返回</div>
-    <div class="header-title">
-        <input type="text" id="level" value="功力一层" readonly placeholder="内功层数">
-    </div>
-    <div class="header-button"></div>
-</header>
-<section class="flex">
-    <div id="titleContainer">
-        <img src="" id="icon" align="middle"><span id="title"></span>
-    </div>
-    <div id="description"></div>
-    <div id="base"></div>
-    <div id="detail"></div>
-    <div id="upgrade"></div>
-</section>
-<div id="hide" hidden></div>
+    <header>
+        <div class="header-button" id="closeWindow"><i class="iconfont icon-back"></i>返回</div>
+        <div class="header-title">
+            <input type="text" id="level" value="功力一层" readonly placeholder="内功层数">
+        </div>
+        <div class="header-button"></div>
+    </header>
+    <section class="flex">
+        <div id="titleContainer">
+            <img src="" id="icon" align="middle"><span id="title"></span>
+        </div>
+        <div id="description"></div>
+        <div id="base"></div>
+        <div id="detail"></div>
+        <div id="upgrade"></div>
+    </section>
+    <div id="hide" hidden></div>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-    let selectData = {};
+    var selectData = {};
 
     function numberToChinese(section) {
-        const chnNumChar = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
-        const chnUnitSection = ["", "万", "亿", "万亿", "亿亿"];
-        const chnUnitChar = ["", "十", "百", "千"];
-        let strIns = '',
+        var chnNumChar = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+        var chnUnitSection = ["", "万", "亿", "万亿", "亿亿"];
+        var chnUnitChar = ["", "十", "百", "千"];
+        var strIns = '',
             chnStr = '';
-        let unitPos = 0;
-        let zero = true;
+        var unitPos = 0;
+        var zero = true;
         while (section > 0) {
-            let v = section % 10;
+            var v = section % 10;
             if (v === 0) {
                 if (!zero) {
                     zero = true;
@@ -231,34 +230,34 @@
     }
 
     function initView() {
-        let header = $api.dom('header');
-        let headerH = $api.fixStatusBar(header);
+        var header = $api.dom('header');
+        var headerH = $api.fixStatusBar(header);
     }
 
     function initData(level) {
-        let url = api.pageParam.url.replace(/\/\d+$/, '/' + (level || 1));
+        var url = api.pageParam.url.replace(/\/\d+$/, '/' + (level || 1));
         api.ajax({
             url: url,
             dataType: 'text'
-        }, function (ret, err) {
+        }, function(ret, err) {
             if (ret) {
-                let $hide = $('#hide').empty();
+                var $hide = $('#hide').empty();
                 $hide.html(ret);
-                let $h1 = $hide.find('h1');
+                var $h1 = $hide.find('h1');
                 $('#title').empty().html($h1.prop('outerHTML'));
-                let $img = $h1.next();
+                var $img = $h1.next();
                 $('#icon').hide().attr('src', 'http://9yin.azurewebsites.net/' + $img.attr('src')).show();
-                let $p = $img.next();
+                var $p = $img.next();
                 $('#description').empty().text($p.text());
-                let $base = $p.next();
+                var $base = $p.next();
                 $('#base').empty().html($base.prop('outerHTML'));
-                let $select = $base.next().children('select');
+                var $select = $base.next().children('select');
                 selectData = $.extend({}, {
                     actives: [],
                     datas: []
                 });
-                $select.find('option').each(function (index) {
-                    let $option = $(this);
+                $select.find('option').each(function(index) {
+                    var $option = $(this);
                     selectData.datas.push({
                         name: '功力' + numberToChinese(parseInt($option.text())) + '层',
                         value: $option.attr('value')
@@ -268,7 +267,7 @@
                     }
                 });
 
-                let $detail = $select.parent().next();
+                var $detail = $select.parent().next();
                 $('#detail').empty().html($detail.prop('outerHTML')).find('tr').last().remove();
                 $('#upgrade').html($detail.find('td').last().html());
                 $hide.empty();
@@ -277,7 +276,7 @@
     }
 
     function showSelect() {
-        let UIActionSelector = api.require('UIActionSelector');
+        var UIActionSelector = api.require('UIActionSelector');
         UIActionSelector.open({
             datas: selectData.datas,
             layout: {
@@ -324,10 +323,10 @@
             },
             fixedOn: api.frameName,
             actives: selectData.actives
-        }, function (ret, err) {
+        }, function(ret, err) {
             if (ret) {
                 if (ret.eventType === 'ok') {
-                    let levelValue = ret.selectedInfo[0].value;
+                    var levelValue = ret.selectedInfo[0].value;
                     $('#level').val(ret.level1);
                     initData(levelValue);
                 }
@@ -336,16 +335,16 @@
     }
 
     function initEvent() {
-        $api.addEvt($api.byId('closeWindow'), 'click', function () {
+        $api.addEvt($api.byId('closeWindow'), 'click', function() {
             api.closeWin();
         });
-        $api.addEvt($api.byId('level'), 'click', function () {
+        $api.addEvt($api.byId('level'), 'click', function() {
             showSelect();
         });
     }
 
-    $(function () {
-        apiready = function () {
+    $(function() {
+        apiready = function() {
             initView();
             initEvent();
             initData();

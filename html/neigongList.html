@@ -3,11 +3,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport"
-          content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width"/>
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
     <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
     <title>Hello APP</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
     <style>
         html,
         body {
@@ -40,7 +39,7 @@
 </head>
 
 <body>
-<div id="placeholder" class="scale-1px"></div>
+    <div id="placeholder" class="scale-1px"></div>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/jquery-3.3.1.min.js"></script>
@@ -90,9 +89,9 @@
         ng_task_001: '/skill/skill_ng003'
     };
 
-    let originalDatas = [];
+    var originalDatas = [];
 
-    let groupList;
+    var groupList;
 
     function initView(datas) {
         groupList = api.require('groupList');
@@ -147,7 +146,7 @@
             datas: datas,
             fixedOn: api.frameName,
             fixed: true
-        }, function (ret, err) {
+        }, function(ret, err) {
             if (ret) {
                 if (ret.eventType !== 'show' && ret.cellData) {
                     api.openWin({
@@ -167,7 +166,7 @@
     }
 
     function initSearchBar() {
-        let UIInput = api.require('UIInput');
+        var UIInput = api.require('UIInput');
         UIInput.open({
             rect: {
                 x: 0,
@@ -188,10 +187,10 @@
             placeholder: '请输入关键字进行搜索',
             keyboardType: 'default',
             fixedOn: api.frameName
-        }, function (ret) {
+        }, function(ret) {
             if (ret.eventType === 'change') {
-                UIInput.value(function (ret) {
-                    let searchdData;
+                UIInput.value(function(ret) {
+                    var searchdData;
                     if (ret.msg.trim().length !== 0) {
                         searchdData = searchData(ret.msg, originalDatas);
                     } else {
@@ -209,25 +208,28 @@
     }
 
     function searchData(text, datas) {
-        let searchResult = [];
-        datas.forEach(function (data, index) {
-            let tempDatas = {
+        var searchResult = [];
+        for (var i = 0; i < datas.length; i++) {
+            var data = datas[i],
+                index = 1;
+            var tempDatas = {
                 title: null,
                 cells: []
             };
-            if(data.title.indexOf(text) !== -1){
+            if (data.title.indexOf(text) !== -1) {
                 tempDatas = data;
-            }else{
-                data.cells.forEach(function (cell) {
+            } else {
+                for (var j = 0; j < data.cells.length; j++) {
+                    var cell = data.cells[j];
                     if (cell.full.indexOf(text) !== -1) {
                         tempDatas.title = data.title;
                         tempDatas.cells.push(cell);
                     }
-                });
+                }
             }
             if (tempDatas.title != null)
                 searchResult.push(tempDatas);
-        });
+        }
         return searchResult;
     }
 
@@ -235,28 +237,28 @@
         api.ajax({
             url: 'http://9yin.azurewebsites.net/neigong/',
             dataType: 'text'
-        }, function (ret, err) {
+        }, function(ret, err) {
             if (ret) {
-                let $html = $(ret);
-                let $details = $html.find('ul');
-                let tempDataArray = [];
-                $details.each(function () {
-                    let that = this;
-                    let tempData = {
+                var $html = $(ret);
+                var $details = $html.find('ul');
+                var tempDataArray = [];
+                $details.each(function() {
+                    var that = this;
+                    var tempData = {
                         title: $(this).prev().text(),
-                        cells: function () {
-                            let tempCellArray = [];
-                            $(that).find('li > a').each(function () {
-                                let $a = $(this);
-                                let tempCell = {
-                                    icon: function () {
-                                        let iconMapKey = $a.attr('href').replace(/\/1/, '').replace('/neigong/', '');
+                        cells: function() {
+                            var tempCellArray = [];
+                            $(that).find('li > a').each(function() {
+                                var $a = $(this);
+                                var tempCell = {
+                                    icon: function() {
+                                        var iconMapKey = $a.attr('href').replace(/\/1/, '').replace('/neigong/', '');
                                         return 'http://9yin.azurewebsites.net/images/icon' + (iconMap[iconMapKey] || '/neigong/' + iconMapKey) + '.png';
                                     }(),
                                     main: $a.text().replace(/[［\[][\u4e00-\u9fa5()]+[］\]]/, ''),
                                     full: $a.text(),
-                                    sub: '曾用名:' + function () {
-                                        let tempMatch = $a.text().match(/[［\[]([\u4e00-\u9fa5()]+)[］\]]/);
+                                    sub: '曾用名:' + function() {
+                                        var tempMatch = $a.text().match(/[［\[]([\u4e00-\u9fa5()]+)[］\]]/);
                                         if (tempMatch != null)
                                             return tempMatch[1];
                                         return '无';
@@ -284,7 +286,7 @@
         })
     }
 
-    apiready = function () {
+    apiready = function() {
         initData();
     };
 </script>

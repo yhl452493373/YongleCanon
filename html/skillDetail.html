@@ -218,18 +218,18 @@
 <script type="text/javascript" src="../script/calc-scripts.js"></script>
 <script type="text/javascript" src="../script/storage_props.js"></script>
 <script type="text/javascript">
-    let selectData = {};
+    var selectData = {};
 
     function numberToChinese(section) {
-        const chnNumChar = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
-        const chnUnitSection = ["", "万", "亿", "万亿", "亿亿"];
-        const chnUnitChar = ["", "十", "百", "千"];
-        let strIns = '',
+        var chnNumChar = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+        var chnUnitSection = ["", "万", "亿", "万亿", "亿亿"];
+        var chnUnitChar = ["", "十", "百", "千"];
+        var strIns = '',
             chnStr = '';
-        let unitPos = 0;
-        let zero = true;
+        var unitPos = 0;
+        var zero = true;
         while (section > 0) {
-            let v = section % 10;
+            var v = section % 10;
             if (v === 0) {
                 if (!zero) {
                     zero = true;
@@ -248,33 +248,33 @@
     }
 
     function initView() {
-        let header = $api.dom('header');
-        let headerH = $api.fixStatusBar(header);
+        var header = $api.dom('header');
+        var headerH = $api.fixStatusBar(header);
     }
 
     function initData(level) {
-        let url = api.pageParam.url.replace(/\/\d+$/, '/' + (level || 1));
+        var url = api.pageParam.url.replace(/\/\d+$/, '/' + (level || 1));
         api.ajax({
             url: url,
             dataType: 'text'
         }, function (ret, err) {
             if (ret) {
                 $('#props').hide();
-                let $hide = $('#hide').empty();
+                var $hide = $('#hide').empty();
                 $hide.html(ret);
-                let $h1 = $hide.find('h1');
+                var $h1 = $hide.find('h1');
                 $('#title').empty().html($h1.prop('outerHTML'));
-                let $p = $h1.next();
+                var $p = $h1.next();
                 $('#description').empty().text($p.text());
-                let $const = $p.next();
+                var $const = $p.next();
                 $('#const').html($const.html());
-                let $select = $const.next().children('select');
+                var $select = $const.next().children('select');
                 selectData = $.extend({}, {
                     actives: [],
                     datas: []
                 });
                 $select.find('option').each(function (index) {
-                    let $option = $(this);
+                    var $option = $(this);
                     selectData.datas.push({
                         name: '功力' + numberToChinese(parseInt($option.text())) + '层',
                         value: $option.attr('value')
@@ -284,8 +284,8 @@
                     }
                 });
 
-                let $detail = $select.parent().next();
-                let trStringArray = [];
+                var $detail = $select.parent().next();
+                var trStringArray = [];
                 $detail.find('tr').each(function () {
                     trStringArray.push(assemblyTr($(this)));
                 });
@@ -299,7 +299,7 @@
     }
 
     function showLevelSelect() {
-        let UIActionSelector = api.require('UIActionSelector');
+        var UIActionSelector = api.require('UIActionSelector');
         UIActionSelector.open({
             datas: selectData.datas,
             layout: {
@@ -349,7 +349,7 @@
         }, function (ret, err) {
             if (ret) {
                 if (ret.eventType === 'ok') {
-                    let levelValue = ret.selectedInfo[0].value;
+                    var levelValue = ret.selectedInfo[0].value;
                     $('#level').val(ret.level1);
                     initData(levelValue);
                 }
@@ -358,7 +358,7 @@
     }
 
     function assemblyTr($tr) {
-        let $children = $tr.children('th,td');
+        var $children = $tr.children('th,td');
         return '<tr>' +
             '                <th rowspan="2" class="single-skill-detail" data-url="http://9yin.azurewebsites.net' + $children.eq(0).children('form').attr('action') + '">' +
             '                    <img src="http://9yin.azurewebsites.net' + $children.eq(1).children('img').attr('src') + '">' +
@@ -387,7 +387,7 @@
             '                    </table>' +
             '                </td>' +
             '               ' + function () {
-                let tempScript = [];
+                var tempScript = [];
                 $tr.children('script').each(function () {
                     tempScript.push(this.outerHTML);
                 });
@@ -400,8 +400,8 @@
     }
 
     function showBingluLevelSelect() {
-        let UIActionSelector = api.require('UIActionSelector');
-        const datas = [{
+        var UIActionSelector = api.require('UIActionSelector');
+        var datas = [{
             name: '0',
             value: 0
         }, {
@@ -450,13 +450,14 @@
             name: '454',
             value: 454
         }];
-        let actives = [];
-        datas.forEach(function (item, index) {
-            // noinspection EqualityComparisonWithCoercionJS
-            if (item.value == $('#binglu').val()) {
-                actives.push(index);
-            }
-        });
+        var actives = [];
+        for(var i=0;i<datas.length;i++){
+          var item = datas[i],index=i;
+          // noinspection EqualityComparisonWithCoercionJS
+          if (item.value == $('#binglu').val()) {
+              actives.push(index);
+          }
+        }
         UIActionSelector.open({
             datas: datas,
             layout: {
